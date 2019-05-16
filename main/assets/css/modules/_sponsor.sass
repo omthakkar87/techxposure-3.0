@@ -1,0 +1,67 @@
+.sponsor
+  position: relative
+  display: flex
+  width: 960px
+  max-width: 80%
+  height: 100%
+  flex-direction: column
+  justify-content: center
+  margin: 0 auto
+
+  @media (max-width: 1180px)
+    max-width: 100%
+
+  h2
+    margin: 0 0 20px 0
+    font-size: 30px
+    text-align: center
+
+  &--lockup
+    display: block
+    position: relative
+    max-width: 100%
+    max-height: 70%
+    margin: 0 auto
+
+    .simg-container
+      display: flex
+      flex-direction: row
+      flex-wrap: wrap
+      justify-content: space-around
+      align-content: stretch
+      padding: 0
+      max-width: 100%
+      max-height: 100%
+
+      .simg
+        display: inherit
+        float: left
+        flex: 0 0 auto
+
+        .ssimg
+          width: 100%
+          height: 100%
+
+@media screen and (min-width: 1024px) 
+  .simg
+    width: calc(100%/4)
+    height: calc(100%/4)
+  
+  .simg-container
+    height: 100%
+
+
+@media screen and (min-width: 481px) and (max-width: 1024px)
+  .simg
+    width: calc(100%/4)
+    height: calc(100%/4)
+
+@media screen and (min-width: 321px) and (max-width: 480px)
+  .simg
+    width: calc(100%/3)
+    height: calc(100%/3)
+
+@media screen and (max-width: 320px) 
+  .simg
+    width: calc(100%/3)
+    height: calc(100%/3)

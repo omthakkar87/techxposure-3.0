@@ -1,0 +1,99 @@
+.event
+  position: relative
+  display: flex
+  width: 960px
+  max-width: 80%
+  height: 100%
+  flex-direction: column
+  justify-content: center
+  margin: 0 auto
+
+  @media (max-width: 1180px)
+    max-width: 100%
+
+  h2
+    margin: 0 0 20px 0
+    font-size: 30px
+    text-align: center
+
+  &--lockup
+    position: relative
+
+$fun: "../img/events/fun.jpg"
+$tech: "../img/events/tech.jpg"
+$cultural: "../img/events/cultural.jpg"
+$gaming: "../img/events/gaming.jpg"
+.event-container
+  height: 70vh
+  width: 100%
+
+.wrapper 
+  display: flex
+  flex-direction: row
+  align-items: stretch
+  height: 100%
+  
+  .item 
+    display: flex
+    flex-grow: 1
+    transition: all .5s ease
+    background-size: cover
+    background-position: center
+    background-repeat: no-repeat
+    position: relative
+    overflow: hidden
+
+    &:hover 
+      flex-grow: 4
+      box-shadow: inset 0 0 20px #000
+    
+    &:after 
+      content: ""
+      width: 200%
+      height: 43.33%
+      background-color: rgba(#000, 0.75)
+      left: -50%
+      bottom: -10%
+      position: absolute
+      transform: rotate(-15deg)
+      color: #fff
+      text-align: center
+      padding-top: 20px
+      text-transform: uppercase
+      font-size: 30px
+      font-family: 'Montserrat'
+      font-weight: 400
+    
+    &.fun 
+      background-image: url($fun)
+      background-position: 70% center
+      &:after 
+        content: "fun"
+
+    &.tech 
+      background-image: url($tech)
+      background-position: 45% center
+      &:after 
+        content: "tech"
+    
+    &.cultural 
+      background-image: url($cultural)
+      background-position: 70% center
+      &:after 
+        content: "culture"
+    
+    &.gaming 
+      background-image: url($gaming)
+      background-position: 75% center
+      &:after 
+        content: "gaming"
+    
+@media screen and (min-width: 321px) and (max-width: 480px)
+  .wrapper
+    flex-direction: row
+
+    .item
+      &:after
+        font-size: 14px
+        padding-top: 5px
+        bottom: -20%

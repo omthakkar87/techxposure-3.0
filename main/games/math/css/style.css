@@ -1,0 +1,153 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #F9BF3B;
+    font-family: Montserrat;
+    text-align: center;
+}
+
+.wrapper {
+    background-color: #fff;
+    width: 90vw;
+    height: 60vh;
+    margin: 2vh auto;
+    position: relative;
+    border-radius: 3vh;
+    box-shadow: 1vh 1vh #ECF0F1;
+}
+
+.cal {
+    background-color: #ECF0F1;
+    width: 70vw;
+    height: 8vh;
+    top: 5vh;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 6vh;
+    color: #808080;
+    border-radius: 1vh;
+    position: relative;
+}
+
+.cal .cell {
+    margin: 0 2vw;
+}
+
+.player {
+    position: absolute;
+    width: 70vw;
+    top: 10vh;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+.btn {
+    background: #cb4e4e;
+    color: #fff;
+    box-shadow: 0 1vh #ab3c3c;
+    border: none;
+    font-size: 15vh;
+    font-weight: 900;
+    height: 30vh;
+    width: 30vw;
+    margin: 1vh 2vw;
+    border-radius: 2vh;
+    display: inline-block;
+    outline: none;
+    position: relative;
+}
+
+.btn:after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.btn:hover {
+    box-shadow: 0 1.2vh #ab3c3c;
+    top: -0.2vh;
+}
+
+.btn:active {
+    box-shadow: 0 0 #ab3c3c;
+    top: 1vh;
+}
+
+.control {
+    display: none;
+    position: relative;
+    padding : 1vh 0;
+    background: #2ca5d4;
+    width: 90vw;
+    margin: 5vh auto;
+    border-radius: 2vh;
+    box-shadow: 0 1vh #2980b9;
+}
+
+.control .ctrl-button {
+    font-size: 5vh;
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.control:hover {
+    top: -0.2vh;
+    box-shadow: 0 1.2vh #2980b9;
+}
+
+.ctrl:active {
+    box-shadow: 0 0 #2980b9;
+    top: 1vh;
+}
+
+.bar {
+    display: none;
+    position: relative;
+    width: 90vw;
+    height: 8vh;
+    margin: 30px auto;
+    background-color: #6BB9F0;
+    border-radius: 2vh;
+}
+
+.progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 8vh;
+    background-color: #2980b9;
+    border-radius: 2vh;
+}
+
+/**/
+
+.game-over {
+    background: #87D37C;
+    width: 90vw;
+    margin: 5vh auto;
+    padding: 2vh 0;
+    box-shadow: 1vh 1vh #3FC380;
+    border-radius: 2vh;
+}
+
+p {
+    font-size: 3vh;
+    color: #fff;
+}
+
+.new {
+    color: #cb4e4e;
+    font-weight: bold;
+}

@@ -1,0 +1,6 @@
+sass:
+  style: compact
+  sass_dir: ./main/assets/css
+destination: ../www
+incremental: true
+port: 4000

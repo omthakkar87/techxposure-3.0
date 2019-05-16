@@ -1,0 +1,119 @@
+body {
+    background-color: #000000;
+}
+
+.modal {
+    display: none;
+    background: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 50vh;
+    transform: translateY(-50vh);
+    width: 98vw;
+    height: 98vh;
+}
+
+.win {
+    height: 15vh;
+    color: #ffffff;
+    font-size: 8vh;
+    font-weight: bold;
+    font-family: "Roboto Mono";
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.game {
+    background-color: #000000;
+    width: 50vh;
+    height: 50vh;
+    user-select: none;
+    border: #ffffff solid 1vh;
+}
+
+.side {
+    background-color: #000000;
+    width: 50vh;
+    user-select: none;
+    display: block;
+}
+
+.block {
+    transition: background-color 0.3s, transform 0.2s;
+    float: left;
+}
+
+.b1:hover {
+    background-color: #444444;
+    cursor: pointer;
+}
+
+.b2:hover {
+    background-color: #bbbbbb;
+    cursor: pointer;
+}
+
+.row {
+    width: 50vh;
+    overflow: hidden;
+    overflow-x: hidden;
+    perspective: 50vh;
+}
+
+.b1 {
+    transform: rotateY(0deg);
+    display: inline-block;
+    height: 8vh;
+    width: 8vh;
+    background-color: #000000;
+    border-color: #000000;
+    border-width: 1vh;
+    border-style: solid;
+}
+
+.b2 {
+    transform: rotateY(180deg);
+    display: inline-block;
+    height: 8vh;
+    width: 8vh;
+    background-color: #ffffff;
+    border-width: 1vh;
+    border-style: solid;
+}
+
+.title {
+    color: #ffffff;
+    font-size: 8vh;
+    font-weight: bold;
+    font-family: "Roboto Mono";
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.button {
+    cursor: pointer;
+    width: 40vh;
+    height: 8vh;
+    background-color: #555;
+    color: #ffffff;
+    font-size: 5vh;
+    font-weight: bold;
+    font-family: "Roboto Mono";
+    display: table-cell;
+    vertical-align: middle;
+    border-radius: 2vh;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.button:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+#moves {
+    color: #aaaaaa;
+    font-size: 4vh;
+    font-weight: bold;
+    font-family: "Roboto Mono";
+    display: table-cell;
+    vertical-align: middle;
+}

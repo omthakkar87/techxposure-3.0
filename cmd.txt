@@ -1,0 +1,65 @@
+txp 3.0
+txp
+techxposure
+
+events
+event
+
+techevents
+tech events
+
+funevents
+fun events
+
+culturalevents
+cultural events
+
+appwiz.cpl
+ncpa.cpl
+devmgmt.msc
+services.msc
+firewall.cpl
+dskmgmt.msc
+
+chmod
+
+chmod 777
+
+ok google
+hey siri
+hey cortana
+alexa
+
+ipconfig
+ping ip
+
+shutdown
+
+clear
+clr
+cls
+
+restart
+
+rmdir
+
+cd
+md
+rd
+
+mkdir
+
+login
+logout
+
+java
+javac
+
+python
+py
+
+somaiya
+sksac
+sksasc
+
+
