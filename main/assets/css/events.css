@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css?family=Abel');
+html, body {
+  background-color: #000;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.container {
+  /*background: #333 no-repeat center center;*/
+  background-size: cover;
+}
+
+.header {
+  text-align: center;
+  font-size: 2em;
+  color: white;
+  font-family: Abel, Arial, Verdana, sans-serif;
+  padding: 60px
+}
+.noevents {
+  text-align: center;
+  font-size: 2em;
+  color: white;
+  font-family: Abel, Arial, Verdana, sans-serif;
+  padding: 60px;
+  margin: 0;
+}
+
+.event-container {
+  font-family: Abel, Arial, Verdana, sans-serif;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  width: 450px;
+  height: 250px;
+  background-color: #fff;
+  background: linear-gradient( #6dd5ed, #2193b0);
+  box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  margin: 1.5rem;
+}
+
+.card h1 {
+  text-align: center;
+}
+
+.card .additional {
+  position: absolute;
+  width: 150px;
+  height: 100%;
+  background: linear-gradient(#333, #111);
+  transition: width 0.4s;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.card:hover .additional {
+  width: 100%;
+}
+
+.card .additional .user-card {
+  width: 150px;
+  height: 100%;
+  position: relative;
+  float: left;
+  background: url('https://www.nctm.org/uploadedImages/Publications/TCM_Blog/checkerboard.png') no-repeat center center;
+  background-size: cover;
+}
+
+.card .additional .more-info {
+  width: 300px;
+  float: left;
+  position: absolute;
+  left: 150px;
+  height: 100%;
+}
+
+.card .additional .more-info h1 {
+  color: #fff;
+  margin-bottom: 0;
+}
+
+.card .additional .coords {
+  margin: 0 2rem;
+  padding: 20px;
+  justify-content: center;
+  display: flex;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.card .additional .stats {
+  font-size: 2rem;
+  display: flex;
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  top: auto;
+  color: #fff;
+}
+
+.card .additional .stats>div {
+  flex: 1;
+  text-align: center;
+}
+
+.card .additional .stats i {
+  display: block;
+}
+
+.card .additional .stats div.title {
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.card .additional .stats div.value {
+  font-size: 1.3rem;
+  font-weight: bold;
+  line-height: 1.5rem;
+}
+
+.card .general {
+  width: 300px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  padding: 1rem;
+  padding-top: 0;
+}
+
+.card .general .more {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 0.9em;
+}
+
+.register {
+  font-size: 1.3rem;
+  border: 1px solid white;
+  padding: 6px 9px;
+  border-radius: 6px;
+}
+
+@media (max-width: 525px) {
+  .card {
+    width: 90vw;
+    height: 50vw;
+    border-radius: 2vw;
+    margin: 5vw;
+  }
+  .card h1 {
+    font-size: 5.5vw
+  }
+  .card .additional {
+    width: 30vw;
+  }
+  .card .additional .user-card {
+    width: 30vw;
+  }
+  .card .additional .more-info {
+    width: 60vw;
+    left: 30vw;
+  }
+  .card .additional .stats {
+    font-size: 6vw;
+    bottom: 5vw;
+    left: 5vw;
+    right: 5vw;
+    line-height: 5vw;
+  }
+  .card .additional .stats div.title {
+    font-size: 3.5vw;
+  }
+  .card .additional .stats div.value {
+    font-size: 3.5vw;
+    font-weight: bold;
+    padding-top: 1vw;
+    line-height: 3vw;
+  }
+  .card .additional .coords {
+    margin: 0 7vw;
+    padding: 5vw;
+    font-size: 4vw;
+  }
+  .card .general {
+    width: 60vw;
+    padding: 3.5vw;
+    padding-top: 0;
+  }
+  .card .general p {
+    font-size: 3.2vw
+  }
+  .card .general .more {
+    position: absolute;
+    bottom: 3vw;
+    right: 3vw;
+    font-size: 2.6vw;
+  }
+  .register {
+    font-size: 4vw;
+    padding: 1vw 2vw;
+    border-radius: 1.5vw;
+  }
+}

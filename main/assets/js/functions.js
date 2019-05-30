@@ -212,7 +212,7 @@ if (typeof window.ontouchstart !== 'undefined') {
       if (((new Date().getTime()) - funtime) < 8000) {
         //double click occurred
         funtime = 0;
-        window.location.href = "events.html/#fun";
+        window.location.href = "events.html#fun";
       }
       else {
         //not a double click so set as a new first click
@@ -234,7 +234,7 @@ if (typeof window.ontouchstart !== 'undefined') {
       if (((new Date().getTime()) - techtime) < 8000) {
         //double click occurred
         techtime = 0;
-        window.location.href = "events.html/#tech";
+        window.location.href = "events.html#tech";
       }
       else {
         //not a double click so set as a new first click
@@ -256,7 +256,7 @@ if (typeof window.ontouchstart !== 'undefined') {
       if (((new Date().getTime()) - culturaltime) < 8000) {
         //double click occurred
         culturaltime = 0;
-        window.location.href = "events.html/#cultural";
+        window.location.href = "events.html#cultural";
       }
       else {
         //not a double click so set as a new first click
@@ -278,7 +278,7 @@ if (typeof window.ontouchstart !== 'undefined') {
       if (((new Date().getTime()) - gamingtime) < 1000) {
         //double click occurred
         gamingtime = 0;
-        window.location.href = "events.html/#gaming";
+        window.location.href = "events.html#gaming";
       }
       else {
         //not a double click so set as a new first click
@@ -291,15 +291,15 @@ if (typeof window.ontouchstart !== 'undefined') {
 }
 else {
   $('.fun').click(function () {
-    window.location.href = "events.html/#fun";
+    window.location.href = "events.html#fun";
   });
   $('.tech').click(function () {
-    window.location.href = "events.html/#tech";
+    window.location.href = "events.html#tech";
   });
   $('.cultural').click(function () {
-    window.location.href = "events.html/#cultural";
+    window.location.href = "events.html#cultural";
   });
   $('.gaming').click(function () {
-    window.location.href = "events.html/#gaming";
+    window.location.href = "events.html#gaming";
   });
 }

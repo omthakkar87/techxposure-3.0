@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons|Montserrat"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <style>
+    * {
+      font-family: Montserrat;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #container {
+      position: fixed;
+      touch-action: none;
+    }
+  </style>
+  
+  <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/88/three.min.js"></script>
+</head>
+
+<body>
+  <div id="container"></div>
+  <div id="app">
+    <v-app dark class="black">
+      <v-content>
+        <v-container fluid fill-height>
+          <v-layout align-center justify-center>
+            <v-flex xs12 sm6 md4>
+              <v-card class="pa-3 grey darken-4">
+                <v-card-text ma-4>
+                  <h1 class="text-xs-center">Register Now</h1>
+                </v-card-text>
+                <v-tabs v-if="!success" fixed-tabs v-model="active" flat rippl color="grey darken-4" slider-color="#00fff4">
+                  <v-tab flat ripple :key="tab.name" v-for="tab in tabs">
+                    {{tab.name}}
+                  </v-tab>
+                  <v-tab-item>
+                    <v-card-text>
+                      <v-form ref="formSolo" v-model="valid" lazy-validation>
+                        <v-text-field :rules="nameRules" v-model="name" label="Name">
+                        </v-text-field>
+                        <v-text-field :rules="collegeRules" v-model="college" label="College" name="organization">
+                        </v-text-field>
+                        <v-text-field :rules="emailRules" v-model="email" label="Email">
+                        </v-text-field>
+                        <v-text-field mask="##### #####" :rules="phoneRules" v-model="phone" label="Phone">
+                        </v-text-field>
+                        <v-autocomplete :error-messages="eveValError" @change="eventError" v-model="selectedSoloEvents"
+                          :items="eventsSolo" item-text="name" label="Events" chips clearable multiple>
+                          <template v-slot:selection="data">
+                            <v-chip :selected="data.selected" close @input="remove(data.item)">
+                              <strong>{{ data.item.name }}</strong>&nbsp;
+                            </v-chip>
+                          </template><template v-slot:item="data">
+                            <template v-if="typeof data.item !== 'object'">
+                              <v-list-tile-content v-text="data.item"></v-list-tile-content>
+                            </template>
+                            <template v-else>
+                              <v-list-tile-action></v-list-tile-action>
+                              <v-list-tile-content>
+                                <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                              </v-list-tile-content>
+                            </template>
+                          </template>
+                        </v-autocomplete>
+                        <v-checkbox color="#00fff4" required :rules="[v => !!v || 'Checkbox is Required']"
+                          v-model="checkbox" label="I Agree The Above Mentioned Details Are Correct." required>
+                        </v-checkbox>
+                      </v-form>
+                    </v-card-text>
+                  </v-tab-item>
+                  <v-tab-item>
+                    <v-card-text>
+                      <v-form ref="formTeam" v-model="valid" lazy-validation>
+                        <v-text-field :rules="nameRules" v-model="teamname" label="Name">
+                        </v-text-field>
+                        <v-text-field :rules="collegeRules" v-model="teamcollege" label="College" name="organization">
+                        </v-text-field>
+                        <v-text-field :rules="emailRules" v-model="teamemail" label="Email">
+                        </v-text-field>
+                        <v-text-field mask="##### #####" :rules="phoneRules" v-model="teamphone" label="Phone">
+                        </v-text-field>
+                        <v-autocomplete :error-messages="eveValError" @change="eventError" v-model="selectedTeamEvents"
+                          :items="eventsTeam" item-text="name" label="Events" chips clearable multiple>
+                          <template v-slot:selection="data">
+                            <v-chip :selected="data.selected" close @input="remove(data.item)">
+                              <strong>{{ data.item.name }}</strong>&nbsp;
+                            </v-chip>
+                          </template><template v-slot:item="data">
+                            <template v-if="typeof data.item !== 'object'">
+                              <v-list-tile-content v-text="data.item"></v-list-tile-content>
+                            </template>
+                            <template v-else>
+                              <v-list-tile-action></v-list-tile-action>
+                              <v-list-tile-content>
+                                <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                              </v-list-tile-content>
+                            </template>
+                          </template>
+                        </v-autocomplete>
+                        <v-checkbox color="#00fff4" required :rules="[v => !!v || 'Checkbox is Required']"
+                          v-model="checkbox" label="I Agree The Above Mentioned Details Are Correct." required>
+                        </v-checkbox>
+                      </v-form>
+                    </v-card-text>
+                  </v-tab-item>
+                </v-tabs>
+                <v-card-actions v-if="!success">
+                  <v-spacer></v-spacer>
+                  <v-btn :loading="submitting" @click="submit" flat color="primary">Register</v-btn>
+                  <v-spacer></v-spacer>
+                </v-card-actions>
+                <v-card-text v-if="success" class="pa-4">
+                  <h1 class="text-xs-center pb-3">Thank You, For Registering!!!</h1>
+                  <h3 class="text-xs-center">Keep Checking Our Website For Further Information.</h3>
+                </v-card-text>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-content>
+    </v-app>
+  </div>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyB3pGNF3fdjyT-X9ZXeSAotvyBv2mrkvlo",
+      authDomain: "techxposure-2019.firebaseapp.com",
+      databaseURL: "https://techxposure-2019.firebaseio.com",
+      projectId: "techxposure-2019",
+      storageBucket: "techxposure-2019.appspot.com",
+      messagingSenderId: "1082992539334",
+      appId: "1:1082992539334:web:de9de8033b4a474c"
+    };
+    // Initialize Firebase
+    let firebaseApp = firebase.initializeApp(firebaseConfig);
+    let db = firebaseApp.database();
+
+    new Vue({
+      el: '#app',
+      data() {
+        return {
+          active: null,
+          submitting: false,
+          success: false,
+          valid: true,
+          tabs: [
+            { name: 'Solo' },
+            { name: 'Team' }
+          ],
+          eveValError: '',
+          checkbox: false,
+          name: '',
+          teamname: '',
+          nameRules: [
+            v => !!v || 'Name is required'
+          ],
+          email: '',
+          teamemail:'',
+          emailRules: [
+            v => !!v || 'E-mail is required',
+            v => /.+@.+/.test(v) || 'E-mail must be valid'
+          ],
+          phone: '',
+          teamphone:'',
+          phoneRules: [
+            v => !!v || 'Phone Number is required',
+            v => (v && v.length == 10 && /^[0-9]*$/.test(v)) || 'Phone Number must have 10 Digits',
+          ],
+          college: '',
+          teamcollege:'',
+          collegeRules: [
+            v => !!v || 'College Name is required'
+          ],
+          selectedSoloEvents: [],
+          eventsSolo: [
+            { header: 'Fun Events' },
+            { name: 'Techno Logy', group: 'Fun Events' },
+            { name: 'Code Debugger', group: 'Fun Events' },
+            { name: 'Codistan', group: 'Fun Events' },
+            { name: 'Quizzz...', group: 'Fun Events' },
+            { name: 'Treasure Funt', group: 'Fun Events' },
+            { divider: true },
+            { header: 'Coding Events' },
+            { name: 'candy crush', group: 'Coding Events' },
+            { name: 'ludo', group: 'Coding Events' },
+            { name: 'web desing', group: 'Coding Events' }
+          ],
+          selectedTeamEvents: [],
+          eventsTeam: [
+            { header: 'Fun Events' },
+            { name: 'Sleeping', group: 'Fun Events' },
+            { name: 'coding error', group: 'Fun Events' },
+            { name: 'code mapper', group: 'Fun Events' },
+            { divider: true },
+            { header: 'Coding Events' },
+            { name: 'pubg', group: 'Coding Events' },
+            { name: 'csgo', group: 'Coding Events' },
+          ]
+        }
+      },
+      methods: {
+        remove(item) {
+          this.selectedEvents.splice(this.selectedEvents.indexOf(item), 1)
+          this.selectedEvents = [...this.selectedEvents]
+        },
+        doneloading(){
+          this.submitting=false;
+        },
+        eventError() {
+          if (this.active == 0) {
+            if (this.selectedSoloEvents.length <= 0) {
+              this.eveValError = 'Atleast One Event is required';
+            }
+            else {
+              this.eveValError = '';
+            }
+          } else {
+            if (this.selectedTeamEvents.length <= 0) {
+              this.eveValError = 'Atleast One Event is required';
+            }
+            else {
+              this.eveValError = '';
+            }
+          }
+        },
+        submit() {
+          this.submitting=true;
+          if (this.eventError() || this.$refs.formSolo.validate() || this.$refs.formTeam.validate()) {
+            if (this.$refs.formSolo.validate() || this.$refs.formTeam.validate()) {
+              db.ref('registration/' + Date.now()).set({
+                name: this.name,
+                email: this.email,
+                college: this.college,
+                phone: this.phone,
+                eventsSolo: this.selectedSoloEvents,
+                eventsTeam: this.selectedTeamEvents
+              }).then(() => {
+                this.submitting = false;
+                this.success = true;
+                this.$refs.formSolo.reset();
+                this.$refs.formTeam.reset();
+                setTimeout(()=> {this.success = false} , 2000);
+              });
+            }
+          }
+        }
+      },
+      created() {
+        this.$vuetify.theme.primary = "#00fff4";
+      }
+    })
+  </script>
+
+  <script id="vertexShader" type="x-shader/x-vertex">
+    void main() {
+        gl_Position = vec4( position, 1.0 );
+    }
+</script>
+  <script id="fragmentShader" type="x-shader/x-fragment">
+  uniform vec2 u_resolution;
+  uniform vec2 u_mouse;
+  uniform float u_time;
+  uniform sampler2D u_noise;
+  uniform sampler2D u_buffer;
+  uniform bool u_renderpass;
+    
+  const float blurMultiplier = 0.95;
+  const float circleSize = .25;
+  const float blurStrength = .98;
+  const float threshold = .5;
+  const float scale = 4.;
+  
+  #define _fract true
+  
+  #define PI 3.141592653589793
+  #define TAU 6.283185307179586
+
+  vec2 hash2(vec2 p)
+  {
+    vec2 o = texture2D( u_noise, (p+0.5)/256.0, -100.0 ).xy;
+    return o;
+  }
+  
+  vec3 hsb2rgb( in vec3 c ){
+    vec3 rgb = clamp(abs(mod(c.x*6.0+vec3(0.0,4.0,2.0),
+                             6.0)-3.0)-1.0,
+                     0.0,
+                     1.0 );
+    rgb = rgb*rgb*(3.0-2.0*rgb);
+    return c.z * mix( vec3(1.0), rgb, c.y);
+  }
+  
+  vec3 domain(vec2 z){
+    return vec3(hsb2rgb(vec3(atan(z.y,z.x)/TAU,1.,1.)));
+  }
+  vec3 colour(vec2 z) {
+      return domain(z);
+  }
+
+  
+#define pow2(x) (x * x)
+
+const int samples = 8;
+const float sigma = float(samples) * 0.25;
+
+float gaussian(vec2 i) {
+    return 1.0 / (2.0 * PI * pow2(sigma)) * exp(-((pow2(i.x) + pow2(i.y)) / (2.0 * pow2(sigma))));
+}
+
+vec3 hash33(vec3 p){ 
+    
+    float n = sin(dot(p, vec3(7, 157, 113)));    
+    return fract(vec3(2097152, 262144, 32768)*n); 
+}
+
+vec3 blur(sampler2D sp, vec2 uv, vec2 scale) {
+    vec3 col = vec3(0.0);
+    float accum = 0.0;
+    float weight;
+    vec2 offset;
+    
+    for (int x = -samples / 2; x < samples / 2; ++x) {
+        for (int y = -samples / 2; y < samples / 2; ++y) {
+            offset = vec2(x, y);
+            weight = gaussian(offset);
+            col += texture2D(sp, uv + scale * offset).rgb * weight;
+            accum += weight;
+        }
+    }
+    
+    return col / accum;
+}
+  void main() {
+    vec2 uv = (gl_FragCoord.xy - 0.5 * u_resolution.xy) / u_resolution.y;
+    uv *= scale;
+    vec2 mouse = u_mouse * scale;
+    
+    vec2 ps = vec2(1.0) / u_resolution.xy;
+    vec2 sample = gl_FragCoord.xy / u_resolution.xy;
+    vec2 o = mouse*.2+vec2(.65, .5);
+    float d = .98;
+    sample = d * (sample - o);
+    sample += o;
+    sample += vec2(sin((u_time+uv.y * .5)*10.)*.001, -.00);
+    
+    vec3 fragcolour;
+    vec4 tex;
+    if(u_renderpass) {
+      tex = vec4(blur(u_buffer, sample, ps*blurStrength) * blurMultiplier, 1.);
+      float df = length(mouse - uv);
+      fragcolour = vec3( smoothstep( circleSize, 0., df ) );
+    } else {
+      tex = texture2D(u_buffer, sample, 2.) * .98;
+      tex = vec4(
+        smoothstep(0.0, threshold - fwidth(tex.x), tex.x),
+        smoothstep(0.2, threshold - fwidth(tex.y) + .2, tex.y),
+        smoothstep(-0.05, threshold - fwidth(tex.z) - .2, tex.z),
+        1.);
+      vec3 n = hash33(vec3(uv, u_time*.1));
+      tex.rgb += n * .175 - .1;
+      // tex = vec4(
+      //   smoothstep(0.0, threshold - fwidth(tex.x), tex.x),
+      //   smoothstep(0.2, threshold - fwidth(tex.x) + .2, tex.x),
+      //   smoothstep(-0.05, threshold - fwidth(tex.x) - .2, tex.x),
+      //   1.);
+    }
+    // vec4 tex = texture2D(u_buffer, sample, 2.) * .98;
+    
+    
+
+    gl_FragColor = vec4(fragcolour,1.0);
+    gl_FragColor += tex;
+    
+  }
+</script>
+  <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/982762/ccapture.js"></script>
+  <script>
+    /*
+    Most of the stuff in here is just bootstrapping. Essentially it's just
+    setting ThreeJS up so that it renders a flat surface upon which to draw 
+    the shader. The only thing to see here really is the uniforms sent to 
+    the shader. Apart from that all of the magic happens in the HTML view
+    under the fragment shader.
+    */
+
+    let container;
+    let camera, scene, renderer;
+    let uniforms;
+
+    let divisor = 1 / 10;
+
+    let newmouse = {
+      x: 0,
+      y: 0
+    };
+
+
+    let loader = new THREE.TextureLoader();
+    let texture, rtTexture, rtTexture2;
+    loader.setCrossOrigin("anonymous");
+    loader.load(
+      'https://s3-us-west-2.amazonaws.com/s.cdpn.io/982762/noise.png',
+      function do_something_with_texture(tex) {
+        texture = tex;
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.minFilter = THREE.LinearFilter;
+        init();
+        animate();
+      });
+
+
+    function init() {
+      container = document.getElementById('container');
+
+      camera = new THREE.Camera();
+      camera.position.z = 1;
+
+      scene = new THREE.Scene();
+
+      var geometry = new THREE.PlaneBufferGeometry(2, 2);
+
+      rtTexture = new THREE.WebGLRenderTarget(window.innerWidth * .2, window.innerHeight * .2);
+      rtTexture2 = new THREE.WebGLRenderTarget(window.innerWidth * .2, window.innerHeight * .2);
+
+      uniforms = {
+        u_time: { type: "f", value: 1.0 },
+        u_resolution: { type: "v2", value: new THREE.Vector2() },
+        u_noise: { type: "t", value: texture },
+        u_buffer: { type: "t", value: rtTexture.texture },
+        u_mouse: { type: "v2", value: new THREE.Vector2() },
+        u_renderpass: { type: 'b', value: false }
+      };
+
+
+      var material = new THREE.ShaderMaterial({
+        uniforms: uniforms,
+        vertexShader: document.getElementById('vertexShader').textContent,
+        fragmentShader: document.getElementById('fragmentShader').textContent
+      });
+
+      material.extensions.derivatives = true;
+
+      var mesh = new THREE.Mesh(geometry, material);
+      scene.add(mesh);
+
+      renderer = new THREE.WebGLRenderer();
+      renderer.setPixelRatio(window.devicePixelRatio);
+
+      container.appendChild(renderer.domElement);
+
+      onWindowResize();
+      window.addEventListener('resize', onWindowResize, false);
+
+
+      document.addEventListener('pointermove', e => {
+        let ratio = window.innerHeight / window.innerWidth;
+        newmouse.x = (e.pageX - window.innerWidth / 2) / window.innerWidth / ratio;
+        newmouse.y = (e.pageY - window.innerHeight / 2) / window.innerHeight * -1;
+
+        e.preventDefault();
+      });
+    }
+
+    function onWindowResize(event) {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      uniforms.u_resolution.value.x = renderer.domElement.width;
+      uniforms.u_resolution.value.y = renderer.domElement.height;
+
+      rtTexture = new THREE.WebGLRenderTarget(window.innerWidth * .2, window.innerHeight * .2);
+      rtTexture2 = new THREE.WebGLRenderTarget(window.innerWidth * .2, window.innerHeight * .2);
+    }
+
+    function animate(delta) {
+      requestAnimationFrame(animate);
+      render(delta);
+    }
+
+
+
+
+
+
+    let capturer = new CCapture({
+      verbose: true,
+      framerate: 60,
+      // motionBlurFrames: 4,
+      quality: 90,
+      format: 'webm',
+      workersPath: 'js/'
+    });
+
+    let capturing = false;
+
+    isCapturing = function (val) {
+      if (val === false && window.capturing === true) {
+        capturer.stop();
+        capturer.save();
+      } else if (val === true && window.capturing === false) {
+        capturer.start();
+      }
+      capturing = val;
+    };
+    toggleCapture = function () {
+      isCapturing(!capturing);
+    };
+
+    window.addEventListener('keyup', function (e) { if (e.keyCode == 68) toggleCapture(); });
+
+    let then = 0;
+    function renderTexture(delta) {
+      // let ov = uniforms.u_buff.value;
+
+      let odims = uniforms.u_resolution.value.clone();
+      uniforms.u_resolution.value.x = window.innerWidth * .2;
+      uniforms.u_resolution.value.y = window.innerHeight * .2;
+
+      uniforms.u_buffer.value = rtTexture2.texture;
+
+      uniforms.u_renderpass.value = true;
+
+      //   rtTexture = rtTexture2;
+      //   rtTexture2 = buffer;
+
+      window.rtTexture = rtTexture;
+      renderer.setRenderTarget(rtTexture);
+      renderer.render(scene, camera, rtTexture, true);
+
+      let buffer = rtTexture;
+      rtTexture = rtTexture2;
+      rtTexture2 = buffer;
+
+      // uniforms.u_buff.value = ov;
+
+      uniforms.u_buffer.value = rtTexture.texture;
+      uniforms.u_resolution.value = odims;
+      uniforms.u_renderpass.value = false;
+    }
+    function render(delta) {
+
+      uniforms.u_mouse.value.x += (newmouse.x - uniforms.u_mouse.value.x) * divisor;
+      uniforms.u_mouse.value.y += (newmouse.y - uniforms.u_mouse.value.y) * divisor;
+
+      uniforms.u_time.value = delta * 0.0005;
+      renderer.render(scene, camera);
+      renderTexture();
+
+      if (capturing) {
+        capturer.capture(renderer.domElement);
+      }
+    }
+  </script>
+</body>
+
+</html>
