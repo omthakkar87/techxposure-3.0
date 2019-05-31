@@ -6,19 +6,677 @@
   <title>Events</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Abel');
 
-  <link rel="stylesheet" href="assets/css/events.css">
-  <link rel="stylesheet" href="assets/css/event-loader.css">
+    html,
+    body {
+      background-color: #000;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    .header h1 {
+      margin: 0;
+    }
+
+    .header {
+      text-align: center;
+      font-size: 2em;
+      color: white;
+      font-family: Abel, Arial, Verdana, sans-serif;
+      padding: 60px
+    }
+
+    .noevents {
+      text-align: center;
+      font-size: 2em;
+      color: white;
+      font-family: Abel, Arial, Verdana, sans-serif;
+      padding: 60px;
+      margin: 0;
+    }
+
+    .event-container {
+      font-family: Abel, Arial, Verdana, sans-serif;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .card {
+      width: 450px;
+      height: 250px;
+      background-color: #fff;
+      background: linear-gradient(#6dd5ed, #2193b0);
+      box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4);
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
+      margin: 1.5rem;
+    }
+
+    .card h1 {
+      text-align: center;
+    }
+
+    .card .additional {
+      position: absolute;
+      width: 150px;
+      height: 100%;
+      background: linear-gradient(#333, #111);
+      transition: width 0.4s;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .card:hover .additional {
+      width: 100%;
+    }
+
+    .card .additional .user-card {
+      width: 150px;
+      height: 100%;
+      position: relative;
+      float: left;
+      background: url('https://www.nctm.org/uploadedImages/Publications/TCM_Blog/checkerboard.png') no-repeat center center;
+      background-size: cover;
+    }
+
+    .card .additional .more-info {
+      width: 300px;
+      float: left;
+      position: absolute;
+      left: 150px;
+      height: 100%;
+    }
+
+    .card .additional .more-info h1 {
+      color: #fff;
+      margin-bottom: 0;
+    }
+
+    .card .additional .coords {
+      margin: 0 2rem;
+      padding: 20px;
+      justify-content: center;
+      display: flex;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .card .additional .stats {
+      font-size: 2rem;
+      display: flex;
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      right: 1rem;
+      top: auto;
+      color: #fff;
+    }
+
+    .card .additional .stats>div {
+      flex: 1;
+      text-align: center;
+    }
+
+    .card .additional .stats i {
+      display: block;
+    }
+
+    .card .additional .stats div.title {
+      font-size: 0.75rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .card .additional .stats div.value {
+      font-size: 1.3rem;
+      font-weight: bold;
+      line-height: 1.5rem;
+    }
+
+    .card .general {
+      width: 300px;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 1;
+      box-sizing: border-box;
+      padding: 1rem;
+      padding-top: 0;
+    }
+
+    .card .general .more {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      font-size: 0.9em;
+    }
+
+    .register {
+      font-size: 1.3rem;
+      border: 1px solid white;
+      padding: 6px 9px;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 525px) {
+      .card {
+        width: 90vw;
+        height: 50vw;
+        border-radius: 2vw;
+        margin: 5vw;
+      }
+
+      .card h1 {
+        font-size: 5.5vw
+      }
+
+      .card .additional {
+        width: 30vw;
+      }
+
+      .card .additional .user-card {
+        width: 30vw;
+      }
+
+      .card .additional .more-info {
+        width: 60vw;
+        left: 30vw;
+      }
+
+      .card .additional .stats {
+        font-size: 6vw;
+        bottom: 5vw;
+        left: 5vw;
+        right: 5vw;
+        line-height: 5vw;
+      }
+
+      .card .additional .stats div.title {
+        font-size: 3.5vw;
+      }
+
+      .card .additional .stats div.value {
+        font-size: 3.5vw;
+        font-weight: bold;
+        padding-top: 1vw;
+        line-height: 3vw;
+      }
+
+      .card .additional .coords {
+        margin: 0 7vw;
+        padding: 5vw;
+        font-size: 4vw;
+      }
+
+      .card .general {
+        width: 60vw;
+        padding: 3.5vw;
+        padding-top: 0;
+      }
+
+      .card .general p {
+        font-size: 3.2vw
+      }
+
+      .card .general .more {
+        position: absolute;
+        bottom: 3vw;
+        right: 3vw;
+        font-size: 2.6vw;
+      }
+
+      .register {
+        font-size: 4vw;
+        padding: 1vw 2vw;
+        border-radius: 1.5vw;
+      }
+    }
+
+    .evecontainer {
+      display: flex;
+      align-items: center;
+      position: relative;
+      filter: drop-shadow(10px 10px 10px black);
+      height: 100vh;
+      width: 100%;
+      zoom: 0.5;
+    }
+
+    .animation-evecontainer {
+      display: block;
+      position: relative;
+      width: 700px;
+      max-width: 100%;
+      margin: 0 auto;
+      align-items: center;
+    }
+
+    .animation-evecontainer .lightning-evecontainer {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      display: flex;
+      -webkit-transform: translateY(-50%);
+      transform: translateY(-50%);
+    }
+
+    .animation-evecontainer .lightning-evecontainer .lightning {
+      position: absolute;
+      display: block;
+      height: 12px;
+      width: 12px;
+      border-radius: 12px;
+      -webkit-transform-origin: 6px 6px;
+      transform-origin: 6px 6px;
+      -webkit-animation-name: woosh;
+      animation-name: woosh;
+      -webkit-animation-duration: 1.5s;
+      animation-duration: 1.5s;
+      -webkit-animation-iteration-count: infinite;
+      animation-iteration-count: infinite;
+      -webkit-animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+      animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+      -webkit-animation-direction: alternate;
+      animation-direction: alternate;
+    }
+
+    .animation-evecontainer .lightning-evecontainer .lightning.white {
+      background-color: white;
+      box-shadow: 0px 50px 50px 0px rgba(255, 255, 255, 0.3);
+    }
+
+    .animation-evecontainer .lightning-evecontainer .lightning.red {
+      background-color: #fc7171;
+      box-shadow: 0px 50px 50px 0px rgba(252, 113, 113, 0.3);
+      -webkit-animation-delay: 0.2s;
+      animation-delay: 0.2s;
+    }
+
+    .animation-evecontainer .boom-evecontainer {
+      position: absolute;
+      display: flex;
+      width: 80px;
+      height: 80px;
+      text-align: center;
+      align-items: center;
+      -webkit-transform: translateY(-50%);
+      transform: translateY(-50%);
+      left: 200px;
+      top: -145px;
+    }
+
+    .animation-evecontainer .boom-evecontainer .shape {
+      display: inline-block;
+      position: relative;
+      opacity: 0;
+      -webkit-transform-origin: center center;
+      transform-origin: center center;
+    }
+
+    .animation-evecontainer .boom-evecontainer .shape.triangle {
+      width: 0;
+      height: 0;
+      border-style: solid;
+      -webkit-transform-origin: 50% 80%;
+      transform-origin: 50% 80%;
+      -webkit-animation-duration: 1s;
+      animation-duration: 1s;
+      -webkit-animation-timing-function: ease-out;
+      animation-timing-function: ease-out;
+      -webkit-animation-iteration-count: infinite;
+      animation-iteration-count: infinite;
+      margin-left: -15px;
+      border-width: 0 2.5px 5px 2.5px;
+      border-color: transparent transparent #42e599 transparent;
+      -webkit-animation-name: boom-triangle;
+      animation-name: boom-triangle;
+    }
+
+    .animation-evecontainer .boom-evecontainer .shape.triangle.big {
+      margin-left: -25px;
+      border-width: 0 5px 10px 5px;
+      border-color: transparent transparent #fade28 transparent;
+      -webkit-animation-name: boom-triangle-big;
+      animation-name: boom-triangle-big;
+    }
+
+    .animation-evecontainer .boom-evecontainer .shape.disc {
+      width: 8px;
+      height: 8px;
+      border-radius: 100%;
+      background-color: #d15ff4;
+      -webkit-animation-name: boom-disc;
+      animation-name: boom-disc;
+      -webkit-animation-duration: 1s;
+      animation-duration: 1s;
+      -webkit-animation-timing-function: ease-out;
+      animation-timing-function: ease-out;
+      -webkit-animation-iteration-count: infinite;
+      animation-iteration-count: infinite;
+    }
+
+    .animation-evecontainer .boom-evecontainer .shape.circle {
+      width: 20px;
+      height: 20px;
+      -webkit-animation-name: boom-circle;
+      animation-name: boom-circle;
+      -webkit-animation-duration: 1s;
+      animation-duration: 1s;
+      -webkit-animation-timing-function: ease-out;
+      animation-timing-function: ease-out;
+      -webkit-animation-iteration-count: infinite;
+      animation-iteration-count: infinite;
+      border-radius: 100%;
+      margin-left: -30px;
+    }
+
+    .animation-evecontainer .boom-evecontainer .shape.circle.white {
+      border: 1px solid white;
+    }
+
+    .animation-evecontainer .boom-evecontainer .shape.circle.big {
+      width: 40px;
+      height: 40px;
+      margin-left: 0px;
+    }
+
+    .animation-evecontainer .boom-evecontainer .shape.circle.big.white {
+      border: 2px solid white;
+    }
+
+    .animation-evecontainer .boom-evecontainer .shape:after {
+      background-color: rgba(178, 215, 232, 0.2);
+    }
+
+    .animation-evecontainer .boom-evecontainer .shape.triangle,
+    .animation-evecontainer .boom-evecontainer .shape.circle,
+    .animation-evecontainer .boom-evecontainer .shape.circle.big,
+    .animation-evecontainer .boom-evecontainer .shape.disc {
+      -webkit-animation-delay: .38s;
+      animation-delay: .38s;
+      -webkit-animation-duration: 3s;
+      animation-duration: 3s;
+    }
+
+    .animation-evecontainer .boom-evecontainer .shape.circle {
+      -webkit-animation-delay: 0.6s;
+      animation-delay: 0.6s;
+    }
+
+    .animation-evecontainer .boom-evecontainer.second {
+      left: 485px;
+      top: 155px;
+    }
+
+    .animation-evecontainer .boom-evecontainer.second .shape.triangle,
+    .animation-evecontainer .boom-evecontainer.second .shape.circle,
+    .animation-evecontainer .boom-evecontainer.second .shape.circle.big,
+    .animation-evecontainer .boom-evecontainer.second .shape.disc {
+      -webkit-animation-delay: 1.9s;
+      animation-delay: 1.9s;
+    }
+
+    .animation-evecontainer .boom-evecontainer.second .shape.circle {
+      -webkit-animation-delay: 2.15s;
+      animation-delay: 2.15s;
+    }
+
+    @-webkit-keyframes woosh {
+      0% {
+        width: 12px;
+        -webkit-transform: translate(0px, 0px) rotate(-35deg);
+        transform: translate(0px, 0px) rotate(-35deg);
+      }
+
+      15% {
+        width: 50px;
+      }
+
+      30% {
+        width: 12px;
+        -webkit-transform: translate(214px, -150px) rotate(-35deg);
+        transform: translate(214px, -150px) rotate(-35deg);
+      }
+
+      30.1% {
+        -webkit-transform: translate(214px, -150px) rotate(46deg);
+        transform: translate(214px, -150px) rotate(46deg);
+      }
+
+      50% {
+        width: 110px;
+      }
+
+      70% {
+        width: 12px;
+        -webkit-transform: translate(500px, 150px) rotate(46deg);
+        transform: translate(500px, 150px) rotate(46deg);
+      }
+
+      70.1% {
+        -webkit-transform: translate(500px, 150px) rotate(-37deg);
+        transform: translate(500px, 150px) rotate(-37deg);
+      }
+
+      85% {
+        width: 50px;
+      }
+
+      100% {
+        width: 12px;
+        -webkit-transform: translate(700px, 0) rotate(-37deg);
+        transform: translate(700px, 0) rotate(-37deg);
+      }
+    }
+
+    @keyframes woosh {
+      0% {
+        width: 12px;
+        -webkit-transform: translate(0px, 0px) rotate(-35deg);
+        transform: translate(0px, 0px) rotate(-35deg);
+      }
+
+      15% {
+        width: 50px;
+      }
+
+      30% {
+        width: 12px;
+        -webkit-transform: translate(214px, -150px) rotate(-35deg);
+        transform: translate(214px, -150px) rotate(-35deg);
+      }
+
+      30.1% {
+        -webkit-transform: translate(214px, -150px) rotate(46deg);
+        transform: translate(214px, -150px) rotate(46deg);
+      }
+
+      50% {
+        width: 110px;
+      }
+
+      70% {
+        width: 12px;
+        -webkit-transform: translate(500px, 150px) rotate(46deg);
+        transform: translate(500px, 150px) rotate(46deg);
+      }
+
+      70.1% {
+        -webkit-transform: translate(500px, 150px) rotate(-37deg);
+        transform: translate(500px, 150px) rotate(-37deg);
+      }
+
+      85% {
+        width: 50px;
+      }
+
+      100% {
+        width: 12px;
+        -webkit-transform: translate(700px, 0) rotate(-37deg);
+        transform: translate(700px, 0) rotate(-37deg);
+      }
+    }
+
+    @-webkit-keyframes boom-circle {
+      0% {
+        opacity: 0;
+      }
+
+      5% {
+        opacity: 1;
+      }
+
+      30% {
+        opacity: 0;
+        -webkit-transform: scale(3);
+        transform: scale(3);
+      }
+    }
+
+    @keyframes boom-circle {
+      0% {
+        opacity: 0;
+      }
+
+      5% {
+        opacity: 1;
+      }
+
+      30% {
+        opacity: 0;
+        -webkit-transform: scale(3);
+        transform: scale(3);
+      }
+    }
+
+    @-webkit-keyframes boom-triangle-big {
+      0% {
+        opacity: 0;
+      }
+
+      5% {
+        opacity: 1;
+      }
+
+      40% {
+        opacity: 0;
+        -webkit-transform: scale(2.5) translate(50px, -50px) rotate(360deg);
+        transform: scale(2.5) translate(50px, -50px) rotate(360deg);
+      }
+    }
+
+    @keyframes boom-triangle-big {
+      0% {
+        opacity: 0;
+      }
+
+      5% {
+        opacity: 1;
+      }
+
+      40% {
+        opacity: 0;
+        -webkit-transform: scale(2.5) translate(50px, -50px) rotate(360deg);
+        transform: scale(2.5) translate(50px, -50px) rotate(360deg);
+      }
+    }
+
+    @-webkit-keyframes boom-triangle {
+      0% {
+        opacity: 0;
+      }
+
+      5% {
+        opacity: 1;
+      }
+
+      30% {
+        opacity: 0;
+        -webkit-transform: scale(3) translate(20px, 40px) rotate(360deg);
+        transform: scale(3) translate(20px, 40px) rotate(360deg);
+      }
+    }
+
+    @keyframes boom-triangle {
+      0% {
+        opacity: 0;
+      }
+
+      5% {
+        opacity: 1;
+      }
+
+      30% {
+        opacity: 0;
+        -webkit-transform: scale(3) translate(20px, 40px) rotate(360deg);
+        transform: scale(3) translate(20px, 40px) rotate(360deg);
+      }
+    }
+
+    @-webkit-keyframes boom-disc {
+      0% {
+        opacity: 0;
+      }
+
+      5% {
+        opacity: 1;
+      }
+
+      40% {
+        opacity: 0;
+        -webkit-transform: scale(2) translate(-70px, -30px);
+        transform: scale(2) translate(-70px, -30px);
+      }
+    }
+
+    @keyframes boom-disc {
+      0% {
+        opacity: 0;
+      }
+
+      5% {
+        opacity: 1;
+      }
+
+      40% {
+        opacity: 0;
+        -webkit-transform: scale(2) translate(-70px, -30px);
+        transform: scale(2) translate(-70px, -30px);
+      }
+    }
+
+    .footer {
+      color: white;
+      font-size: 10px;
+      position: fixed;
+      bottom: 0;
+      font-weight: 200;
+      padding: 10px 20px;
+    }
+
+    .footer a,
+    .footer a:hover,
+    .footer a:focus,
+    .footer a:visited {
+      color: #c6c6c6;
+    }
+  </style>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 </head>
 
 <body>
   <div class="container" id="app">
     <div class="header">
-      
-    
+
+
       <h1 style="text-transform: capitalize">{{category}} Events</h1>
     </div>
     <div v-if="loading" class="evecontainer">
@@ -85,7 +743,62 @@
   <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vuefire/1.4.5/vuefire.js"></script>
-  <script src="assets/js/events.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    let firebaseConfig = {
+      apiKey: "AIzaSyB3pGNF3fdjyT-X9ZXeSAotvyBv2mrkvlo",
+      authDomain: "techxposure-2019.firebaseapp.com",
+      databaseURL: "https://techxposure-2019.firebaseio.com",
+      projectId: "techxposure-2019",
+      storageBucket: "techxposure-2019.appspot.com",
+      messagingSenderId: "1082992539334",
+      appId: "1:1082992539334:web:de9de8033b4a474c"
+    };
+    // Initialize Firebase
+    let Firebaseapp = firebase.initializeApp(firebaseConfig);
+
+    let db = Firebaseapp.database();
+
+    let eventsRef = db.ref('events/' + window.location.hash.substring(1));
+
+    let cat = window.location.hash.substring(1)
+
+    Vue.use(VueFire)
+
+    Vue.config.devtools = true;
+
+    const app = new Vue({
+      el: '#app',
+      name: 'app',
+      data: {
+        category: cat,
+        events: [],
+        loading: true
+      },
+
+      methods: {
+        register() {
+          alert('Hello');
+        }
+      },
+      mounted() {
+        firebase.database().ref('events/' + window.location.hash.substring(1)).once('value', snapshot => {
+          this.events = snapshot.val();
+          this.loading = false;
+        }).catch(err => {
+          console.error(err);
+        })
+      }
+    });
+
+    window.onhashchange = function () {
+      window.location.reload();
+    }
+
+    if (window.location.hash == "") {
+      window.location.hash = "#fun";
+    }
+  </script>
 </body>
 
 </html>

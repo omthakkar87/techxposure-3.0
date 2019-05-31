@@ -110,6 +110,8 @@
 		#terminalReslutsCont a {
 			color: rgba(255, 255, 255, 0.9);
 			text-decoration: none;
+			font-weight: bold;
+			font-size: 16px;
 		}
 
 		#terminalReslutsCont a:hover {
@@ -373,26 +375,16 @@
 				window.open(linkToOpen, '_blank');
 				clearInput();
 			}
+			// Opening links in a new window
+			var openLink = function (linkToOpen) {
+				window.location.href = (linkToOpen);
+				clearInput();
+			}
 
 			// Having a specific text reply to specific strings
 			var textReplies = function () {
 				switch (textInputValueLowerCase) {
 					// funny replies [START]
-					case "mahdi":
-						clearInput();
-						addTextToResults("He's my maker <a target='_blank' href='https://twitter.com/mahdif'>@mahdif</a>");
-						break;
-
-					case "nour":
-						clearInput();
-						addTextToResults("My wife. My life. A talented Front/Back-end developer <a target='_blank' href='https://twitter.com/Nour_ASoud'>@Nour_ASoud</a>");
-						break;
-
-					case "joe":
-						clearInput();
-						addTextToResults("An awesome designer/developer friend of mine. <br> He helped me a bit with the CSS animation <a target='_blank' href='https://twitter.com/joericho'>@joericho</a>");
-						break;
-
 					case "txp":
 					case "techxposure":
 					case "txp 3.0":
@@ -407,6 +399,150 @@
 						clearInput();
 						clearTextOfResults();
 						break;
+
+					case "techevents":
+					case "techevent":
+					case "tech events":
+					case "tech event":
+					case "Technical Events":
+					case "Technical Event":
+					case "coding Events":
+					case "coding Event":
+					case "code Events":
+					case "code Event":
+					case "coders Events":
+					case "coders Event":
+					case "coder Events":
+					case "coder Event":
+						clearInput();
+						addTextToResults("Technical Events:- <br> • Event1 <br> • Event2");
+						break;
+
+					case "culturalevents":
+					case "culturalevent":
+					case "cultural events":
+					case "cultural event":
+					case "dance Events":
+					case "dance Event":
+					case "music Events":
+					case "music Event":
+					case "instrumental Events":
+					case "instrumental Event":
+					case "instrument Events":
+					case "instrument Event":
+					case "instruments Events":
+					case "instruments Event":
+						clearInput();
+						addTextToResults("Cultural Events:- <br> • Event1 <br> • Event2");
+						break;
+					case "funevents":
+					case "funevent":
+					case "fun events":
+					case "fun event":
+						clearInput();
+						addTextToResults("Fun Events:- <br> • Event1 <br> • Event2");
+						break;
+
+					case "appwiz.cpl":
+					case "ncpa.cpl":
+					case "devmgmt.msc":
+					case "dskmgmt.msc":
+					case "firewall.cpl":
+					case "services.msc":
+					case "cmd":
+					case "ipconfig":
+					case "ping 192.168.1.1":
+					case "ping 172.30.0.240":
+					case "ping":
+						clearInput();
+						addTextToResults("Jake aap apna CMD open kijiye😡. Muje sirf fest ke bare mein bataya gaya h.");
+						break;
+
+					case "chmod":
+					case "chmod 777":
+					case "touch":
+					case "ls":
+					case "man":
+					case "pwd":
+						clearInput();
+						addTextToResults("Mere Backend me bhale Linux ho! 😓 but muje ye sab nai aata.");
+						break;
+
+					case "run":
+					case "start":
+					case "play":
+					case "go":
+					case "search":
+					case "browser":
+					case "explorer":
+						clearInput();
+						addTextToResults("Mein kahin bhi nai jane wala. 😏");
+						break;
+
+					case "ok google":
+					case "hey siri":
+					case "alexa":
+					case "hey cortana":
+					case "siri":
+					case "cortana":
+						clearInput();
+						addTextToResults("Usko yahan bulaya tha but she wanted take rest 😊");
+						break;
+
+					case "md":
+					case "cd":
+					case "rd":
+					case "mkdir":
+					case "rmdir":
+					case "chdir":
+						clearInput();
+						addTextToResults("Directory bana ke kya hi karloge. I dont have any file handling support.😢");
+						break;
+
+					case "java":
+					case "javac":
+					case "py":
+					case "python":
+					case "node":
+					case "npm":
+						clearInput();
+						addTextToResults("Agar itna hi programming karna h toh. Please Technical Events mein participate karo");
+						break;
+
+					case "somaiya":
+					case "sksomaiya":
+					case "sksac":
+					case "sksasc":
+					case "aurobindo":
+						clearInput();
+						addTextToResults("<a href='https://sksasc.somaiya.edu/sksasc/'>S. K. Somaiya College Of Arts, Science And Commerce</a><br>This College is one of the few young institutions of Somaiya Vidyavihar campus which has, within a very short span established a prestigious name in the field of education. The college made a modest beginning in the year 1995 with 300 students offering just two educational streams. Today it proudly boasts of educating more than 5500 students every year and offering 15 diverse Under-Graduate, Post-Graduate courses.");
+						break;
+
+					case "shutdown":
+					case "shut down":
+					case "restart":
+					case "logoff":
+					case "logout":
+					case "log off":
+					case "log out":
+					case "signout":
+					case "sign out":
+						clearInput();
+						openLink('./main/index.html');
+						break;
+
+					case "cat videos":
+					case "cat v":
+						addTextToResults("Okay I'll show you some in YouTube.");
+						openLinkInNewWindow('https://www.youtube.com/results?search_query=cat videos');
+						break;
+
+					case "lol":
+					case "trololo":
+						addTextToResults("Mr. Trololo!");
+						openLinkInNewWindow('https://www.youtube.com/watch?v=1uTAJG3Khes');
+						break;
+
 
 					case "i love you":
 					case "love you":
@@ -457,24 +593,6 @@
 						addTextToResults("F***.");
 						break;
 
-					case "shit":
-					case "poop":
-					case "💩":
-						clearInput();
-						addTextToResults("💩");
-						break;
-
-					case "cat videos":
-					case "cat v":
-						addTextToResults("Okay I'll show you some in YouTube.");
-						openLinkInNewWindow('https://www.youtube.com/results?search_query=cat videos');
-						break;
-
-					case "lol":
-					case "trololo":
-						addTextToResults("Mr. Trololo!");
-						openLinkInNewWindow('https://www.youtube.com/watch?v=1uTAJG3Khes');
-						break;
 					// funny replies [END]
 
 					case "youtube":
