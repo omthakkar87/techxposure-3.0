@@ -61,7 +61,7 @@
 								<li><span>Events</span></li>
 								<li><span>Sponsors</span></li>
 								<li><span>Contact</span></li>
-								<li><span>Register</span></li>
+								<li><span>Msg Us</span></li>
 							</ul>
 						</nav>
 						<ul class="l-main-content main-content">
@@ -264,39 +264,36 @@
 							</li>
 							<li class="l-section section">
 								<div class="register">
-									<h2 class="regtitle">Fill Up Your Registration</h2>
-									<form class="registration" id="formr" name="submit-to-google-sheet">
+									<h2 id="regtitle" class="regtitle">Message Us</h2>
+									<form class="registration" id="msgform">
 										<div class="registration--information">
-											<div class="information-event">
-												<select name="event" required="required">
-													<option value="" selected disabled hidden>Select Event</option>
-													<option value="Fun Events">Fun Events</option>
-													<option value="Tech Events">Tech Events</option>
-													<option value="Cultural Events">Cultural Events</option>
-												</select>
-												<label for="event">Event</label>
-											</div>
 											<div class="information-name">
-												<input type="text" value="" name="name"
+												<input type="text" value="" id="name" name="name"
 													onkeyup="this.setAttribute('value', this.value);"
 													required="required">
 												<label for="name">Name</label>
 											</div>
 											<div class="information-email">
-												<input type="email" value="" name="email"
+												<input type="email" value="" id="email" name="email"
 													onkeyup="this.setAttribute('value', this.value);">
 												<label for="email">Email</label>
 											</div>
 											<div class="information-phone">
-												<input type="text" value="" name="phone"
+												<input type="number" value="" id="phone" name="phone"
 													onkeyup="this.setAttribute('value', this.value);"
 													required="required">
 												<label for="phone">Phone</label>
 											</div>
+											<div class="information-message">
+												<input type="text" value="" id="message" name="message"
+													onkeyup="this.setAttribute('value', this.value);"
+													required="required">
+												<label for="message">Message</label>
+											</div>
 										</div>
 										<button type="submit" class="submit">Submit</button>
 									</form>
-									<div class="js-success-message is-hidden">
+									<div id="successMessage" class="js-success-message is-hidden">
 										<center>
 											<h1>Success!</h1>
 										</center>
@@ -313,12 +310,14 @@
 				<li>Events</li>
 				<li>Sponsors</li>
 				<li>Contact</li>
-				<li>Register</li>
+				<li>Msg Us</li>
 			</ul>
 		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 		<script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-2.2.4.min.js"><\/script>')</script>
 		<script src="assets/js/hammer.min.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
 		<script src="assets/js/functions.js"></script>
 		<script src="assets/js/modernizr.js"></script>
 	</div>

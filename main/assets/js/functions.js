@@ -42,20 +42,22 @@ $(document).ready(function () {
     }
   });
   $('.cta').click(function () {
-    var curActive = $('.side-nav').find('.is-active'),
-      curPos = $('.side-nav').children().index(curActive),
-      lastItem = $('.side-nav').children().length - 1,
-      nextPos = lastItem;
-    updateNavs(lastItem);
-    updateContent(curPos, nextPos, lastItem);
+    // var curActive = $('.side-nav').find('.is-active'),
+    //   curPos = $('.side-nav').children().index(curActive),
+    //   lastItem = $('.side-nav').children().length - 1,
+    //   nextPos = lastItem;
+    // updateNavs(lastItem);
+    // updateContent(curPos, nextPos, lastItem);
+    window.location.href = 'register.html';
   });
   $('.ctaevent').click(function () {
-    var curActive = $('.side-nav').find('.is-active'),
-      curPos = $('.side-nav').children().index(curActive),
-      lastItem = $('.side-nav').children().length - 4,
-      nextPos = lastItem;
-    updateNavs(lastItem);
-    updateContent(curPos, nextPos, lastItem);
+    // var curActive = $('.side-nav').find('.is-active'),
+    //   curPos = $('.side-nav').children().index(curActive),
+    //   lastItem = $('.side-nav').children().length - 4,
+    //   nextPos = lastItem;
+    // updateNavs(lastItem);
+    // updateContent(curPos, nextPos, lastItem);
+    window.location.href = 'register.html';
   });
   // swipe support for touch devices
   var targetElement = document.getElementById('viewport'),
@@ -145,24 +147,47 @@ $(document).ready(function () {
   }
   outerNav();
 });
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxODVGD6gp-NemmUGNCr42WLzaN4TS23-0I9sfiik-jAnCon64/exec'
-const form = document.forms['submit-to-google-sheet']
-const successMessage = document.querySelector('.js-success-message')
-const regtitle = document.querySelector('.regtitle')
-form.addEventListener('submit', e => {
-  e.preventDefault()
-  fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-    .then(response => showSuccessMessage(response))
+var firebaseConfig = {
+  apiKey: "AIzaSyB3pGNF3fdjyT-X9ZXeSAotvyBv2mrkvlo",
+  authDomain: "techxposure-2019.firebaseapp.com",
+  databaseURL: "https://techxposure-2019.firebaseio.com",
+  projectId: "techxposure-2019",
+  storageBucket: "techxposure-2019.appspot.com",
+  messagingSenderId: "1082992539334",
+  appId: "1:1082992539334:web:de9de8033b4a474c"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+
+$('#msgform').on('submit',(e)=>{
+  e.preventDefault();
+var name = document.getElementById('name').value;
+var email = document.getElementById('email').value;
+var phone = document.getElementById('phone').value;
+var message = document.getElementById('message').value;
+
+  firebase.database().ref('messages/' + Date.now()).set({
+    name: name,
+    email: email,
+    phone: phone,
+    message: message
+  }).then(() => {
+    console.log('Success!');
+    document.getElementById('successMessage').classList.remove('is-hidden');
+    document.getElementById('msgform').classList.add('is-hidden');
+    document.getElementById('regtitle').classList.add('is-hidden');
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
+  });
 })
-function showSuccessMessage(response) {
-  console.log('Success!', response);
-  successMessage.classList.remove('is-hidden');
-  form.classList.add('is-hidden');
-  regtitle.classList.add('is-hidden');
-  setTimeout(function () {
-    window.location.reload();
-  }, 1500);
-}
+
+
+
+
+
+
 var counttiles = 0;
 $('.abouttxp').click(function () {
   counttiles += 1;

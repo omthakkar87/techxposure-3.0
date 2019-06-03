@@ -14,6 +14,7 @@
     body {
       margin: 0;
       padding: 0;
+      background-color: black;
     }
 
     #container {
@@ -21,12 +22,12 @@
       touch-action: none;
     }
   </style>
-  
+
   <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
-  
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/88/three.min.js"></script>
 </head>
 
@@ -42,7 +43,8 @@
                 <v-card-text ma-4>
                   <h1 class="text-xs-center">Register Now</h1>
                 </v-card-text>
-                <v-tabs v-if="!success" fixed-tabs v-model="active" flat rippl color="grey darken-4" slider-color="#00fff4">
+                <v-tabs v-if="!success" fixed-tabs v-model="active" flat rippl color="grey darken-4"
+                  slider-color="#00fff4">
                   <v-tab flat ripple :key="tab.name" v-for="tab in tabs">
                     {{tab.name}}
                   </v-tab>
@@ -80,6 +82,13 @@
                         </v-checkbox>
                       </v-form>
                     </v-card-text>
+                    
+                <v-card-actions v-if="!success">
+                    <v-spacer></v-spacer>
+                    <v-btn :loading="submitting" @click="submitSolo" flat color="primary">Register</v-btn>
+                    <v-spacer></v-spacer>
+                  </v-card-actions>
+                  
                   </v-tab-item>
                   <v-tab-item>
                     <v-card-text>
@@ -115,13 +124,14 @@
                         </v-checkbox>
                       </v-form>
                     </v-card-text>
-                  </v-tab-item>
-                </v-tabs>
                 <v-card-actions v-if="!success">
                   <v-spacer></v-spacer>
-                  <v-btn :loading="submitting" @click="submit" flat color="primary">Register</v-btn>
+                  <v-btn :loading="submitting" @click="submitTeam" flat color="primary">Register</v-btn>
                   <v-spacer></v-spacer>
                 </v-card-actions>
+                
+              </v-tab-item>
+            </v-tabs>
                 <v-card-text v-if="success" class="pa-4">
                   <h1 class="text-xs-center pb-3">Thank You, For Registering!!!</h1>
                   <h3 class="text-xs-center">Keep Checking Our Website For Further Information.</h3>
@@ -167,24 +177,24 @@
             v => !!v || 'Name is required'
           ],
           email: '',
-          teamemail:'',
+          teamemail: '',
           emailRules: [
             v => !!v || 'E-mail is required',
             v => /.+@.+/.test(v) || 'E-mail must be valid'
           ],
           phone: '',
-          teamphone:'',
+          teamphone: '',
           phoneRules: [
             v => !!v || 'Phone Number is required',
             v => (v && v.length == 10 && /^[0-9]*$/.test(v)) || 'Phone Number must have 10 Digits',
           ],
           college: '',
-          teamcollege:'',
+          teamcollege: '',
           collegeRules: [
             v => !!v || 'College Name is required'
           ],
           selectedSoloEvents: [],
-          eventsSolo: [
+          eventsSolo: [/*
             { header: 'Fun Events' },
             { name: 'Techno Logy', group: 'Fun Events' },
             { name: 'Code Debugger', group: 'Fun Events' },
@@ -195,18 +205,19 @@
             { header: 'Coding Events' },
             { name: 'candy crush', group: 'Coding Events' },
             { name: 'ludo', group: 'Coding Events' },
-            { name: 'web desing', group: 'Coding Events' }
+            { name: 'web desing', group: 'Coding Events' }*/
           ],
+          events: [],
           selectedTeamEvents: [],
-          eventsTeam: [
+          eventsTeam: [/*
             { header: 'Fun Events' },
             { name: 'Sleeping', group: 'Fun Events' },
             { name: 'coding error', group: 'Fun Events' },
             { name: 'code mapper', group: 'Fun Events' },
+            { name: 'pubg', group: 'Fun Events' },
             { divider: true },
             { header: 'Coding Events' },
-            { name: 'pubg', group: 'Coding Events' },
-            { name: 'csgo', group: 'Coding Events' },
+            { name: 'csgo', group: 'Coding Events' },*/
           ]
         }
       },
@@ -215,8 +226,8 @@
           this.selectedEvents.splice(this.selectedEvents.indexOf(item), 1)
           this.selectedEvents = [...this.selectedEvents]
         },
-        doneloading(){
-          this.submitting=false;
+        doneloading() {
+          this.submitting = false;
         },
         eventError() {
           if (this.active == 0) {
@@ -235,30 +246,77 @@
             }
           }
         },
-        submit() {
-          this.submitting=true;
-          if (this.eventError() || this.$refs.formSolo.validate() || this.$refs.formTeam.validate()) {
-            if (this.$refs.formSolo.validate() || this.$refs.formTeam.validate()) {
-              db.ref('registration/' + Date.now()).set({
+        submitSolo() {
+          if (this.eventError() || this.$refs.formSolo.validate()) {
+            if (this.$refs.formSolo.validate()) {
+              this.submitting = true;
+              db.ref('registration/solo/' + Date.now()).set({
                 name: this.name,
                 email: this.email,
                 college: this.college,
                 phone: this.phone,
-                eventsSolo: this.selectedSoloEvents,
-                eventsTeam: this.selectedTeamEvents
+                eventsSolo: this.selectedSoloEvents
               }).then(() => {
                 this.submitting = false;
                 this.success = true;
                 this.$refs.formSolo.reset();
+                setTimeout(() => { window.location.reload(); }, 2000);
+
+                //window.location.reload();
+              });
+            }
+          }
+        },
+        submitTeam() {
+          if (this.eventError() || this.$refs.formTeam.validate()) {
+            if (this.$refs.formTeam.validate()) {
+              this.submitting = true;
+              db.ref('registration/team/' + Date.now()).set({
+                name: this.teamname,
+                email: this.teamemail,
+                college: this.teamcollege,
+                phone: this.teamphone,
+                eventsTeam: this.selectedTeamEvents
+              }).then(() => {
+                this.submitting = false;
+                this.success = true;
                 this.$refs.formTeam.reset();
-                setTimeout(()=> {this.success = false} , 2000);
+                setTimeout(() => { window.location.reload(); }, 2000);
+
+                
               });
             }
           }
         }
       },
-      created() {
+      mounted() {
         this.$vuetify.theme.primary = "#00fff4";
+        firebase.database().ref('events/solo').on('value', (snapshot) => {
+          snapshot.forEach((category) => {
+            var str = category.key.charAt(0).toUpperCase() + category.key.slice(1);
+            var cat = {
+              header: str.concat(' Events')
+            }
+            this.eventsSolo.push(cat)
+            category.forEach((event) => {
+              this.eventsSolo.push(event.val());
+            })
+            this.eventsSolo.push({ divider: true })
+          })
+        })
+        firebase.database().ref('events/team').on('value', (snapshot) => {
+          snapshot.forEach((category) => {
+            var str = category.key.charAt(0).toUpperCase() + category.key.slice(1);
+            var cat = {
+              header: str.concat(' Events')
+            }
+            this.eventsTeam.push(cat)
+            category.forEach((event) => {
+              this.eventsTeam.push(event.val());
+            })
+            this.eventsTeam.push({ divider: true })
+          })
+        })
       }
     })
   </script>
@@ -362,22 +420,15 @@ vec3 blur(sampler2D sp, vec2 uv, vec2 scale) {
       float df = length(mouse - uv);
       fragcolour = vec3( smoothstep( circleSize, 0., df ) );
     } else {
-      tex = texture2D(u_buffer, sample, 2.) * .98;
+      tex = texture2D(u_buffer, sample, 2.) * 0.98;
       tex = vec4(
-        smoothstep(0.0, threshold - fwidth(tex.x), tex.x),
-        smoothstep(0.2, threshold - fwidth(tex.y) + .2, tex.y),
-        smoothstep(-0.05, threshold - fwidth(tex.z) - .2, tex.z),
-        1.);
+        smoothstep(0.2, threshold - fwidth(tex.x) +0.4, tex.x),
+        smoothstep(0.0, threshold - fwidth(tex.y), tex.y),
+        smoothstep(-0.05, threshold - fwidth(tex.z) -0.2, tex.z),
+        1);
       vec3 n = hash33(vec3(uv, u_time*.1));
-      tex.rgb += n * .175 - .1;
-      // tex = vec4(
-      //   smoothstep(0.0, threshold - fwidth(tex.x), tex.x),
-      //   smoothstep(0.2, threshold - fwidth(tex.x) + .2, tex.x),
-      //   smoothstep(-0.05, threshold - fwidth(tex.x) - .2, tex.x),
-      //   1.);
+      tex.rgb += n * .0 - .1;
     }
-    // vec4 tex = texture2D(u_buffer, sample, 2.) * .98;
-    
     
 
     gl_FragColor = vec4(fragcolour,1.0);

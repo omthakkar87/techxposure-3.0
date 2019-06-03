@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
   <style>
-    @import url('https://fonts.googleapis.com/css?family=Abel');
+    @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700,800');
 
     html,
     body {
@@ -21,27 +21,28 @@
 
     .header h1 {
       margin: 0;
+      font-size: 1.5em;
     }
 
     .header {
       text-align: center;
       font-size: 2em;
       color: white;
-      font-family: Abel, Arial, Verdana, sans-serif;
+      font-family: Montserrat, Arial, Verdana, sans-serif;
       padding: 60px
     }
 
     .noevents {
       text-align: center;
-      font-size: 2em;
+      font-size: 1.5em;
       color: white;
-      font-family: Abel, Arial, Verdana, sans-serif;
+      font-family: Montserrat, Arial, Verdana, sans-serif;
       padding: 60px;
       margin: 0;
     }
 
     .event-container {
-      font-family: Abel, Arial, Verdana, sans-serif;
+      font-family: Montserrat, Arial, Verdana, sans-serif;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -61,6 +62,7 @@
 
     .card h1 {
       text-align: center;
+      font-size: 1.5em;
     }
 
     .card .additional {
@@ -129,13 +131,13 @@
     }
 
     .card .additional .stats div.title {
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       font-weight: bold;
       text-transform: uppercase;
     }
 
     .card .additional .stats div.value {
-      font-size: 1.3rem;
+      font-size: 0.9rem;
       font-weight: bold;
       line-height: 1.5rem;
     }
@@ -160,7 +162,7 @@
     }
 
     .register {
-      font-size: 1.3rem;
+      font-size: 1rem;
       border: 1px solid white;
       padding: 6px 9px;
       border-radius: 6px;
@@ -175,7 +177,7 @@
       }
 
       .card h1 {
-        font-size: 5.5vw
+        font-size: 5vw
       }
 
       .card .additional {
@@ -192,7 +194,7 @@
       }
 
       .card .additional .stats {
-        font-size: 6vw;
+        font-size: 5vw;
         bottom: 5vw;
         left: 5vw;
         right: 5vw;
@@ -200,11 +202,11 @@
       }
 
       .card .additional .stats div.title {
-        font-size: 3.5vw;
+        font-size: 3.0vw;
       }
 
       .card .additional .stats div.value {
-        font-size: 3.5vw;
+        font-size: 3.0vw;
         font-weight: bold;
         padding-top: 1vw;
         line-height: 3vw;
@@ -234,7 +236,7 @@
       }
 
       .register {
-        font-size: 4vw;
+        font-size: 3.5vw;
         padding: 1vw 2vw;
         border-radius: 1.5vw;
       }
@@ -700,14 +702,45 @@
         </div>
       </div>
     </div>
-    <p class="noevents" v-if="!loading && events==null">No Events In This Category, Please Check After Few Days</p>
+    <p class="noevents" v-if="!loading && eventsSolo==null && eventsTeam==null">No Events In This Category, Please Check After Few Days</p>
     <div class="event-container">
-      <div class="card" v-for="(event,index) in events" :key="index">
+      <div class="card" v-for="(event,index) in eventsSolo" :key="index">
         <div class="additional">
           <div class="user-card" :style="{'background-image': 'url('+ event.url + ')'}">
           </div>
           <div class="more-info">
-            <h1>{{event.header}}</h1>
+            <h1>{{event.name}}</h1>
+            <div class="coords">
+              <a @click="register" class="register">Register Now</a>
+            </div>
+            <div class="stats">
+              <div>
+                <div class="title">Duration</div>
+                <i class="far fa-clock"></i>
+                <div class="value">{{event.duration}}</div>
+              </div>
+              <div>
+                <div class="title">Entry</div>
+                <i class="fas fa-rupee-sign"></i>
+                <div class="value">{{event.entry}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="general">
+          <h1>{{event.name}}</h1>
+          <p>
+            {{event.content}}
+          </p>
+          <span class="more">Mouse over the card for more info</span>
+        </div>
+      </div>
+      <div class="card" v-for="(event,index) in eventsTeam" :key="index">
+        <div class="additional">
+          <div class="user-card" :style="{'background-image': 'url('+ event.url + ')'}">
+          </div>
+          <div class="more-info">
+            <h1>{{event.name}}</h1>
             <div class="coords">
               <a @click="register" class="register">Register Now</a>
             </div>
@@ -731,7 +764,7 @@
           </div>
         </div>
         <div class="general">
-          <h1>{{event.header}}</h1>
+          <h1>{{event.name}}</h1>
           <p>
             {{event.content}}
           </p>
@@ -759,9 +792,9 @@
 
     let db = Firebaseapp.database();
 
-    let eventsRef = db.ref('events/' + window.location.hash.substring(1));
-
     let cat = window.location.hash.substring(1)
+
+    cat = cat.replace(/%20/g, " ")
 
     Vue.use(VueFire)
 
@@ -772,19 +805,25 @@
       name: 'app',
       data: {
         category: cat,
-        events: [],
+        eventsSolo: [],
+        eventsTeam: [],
         loading: true
       },
 
       methods: {
         register() {
-          alert('Hello');
+          window.location.href = 'register.html';
         }
       },
       mounted() {
-        firebase.database().ref('events/' + window.location.hash.substring(1)).once('value', snapshot => {
-          this.events = snapshot.val();
-          this.loading = false;
+        firebase.database().ref('events/solo/' + cat).once('value', snapshot => {
+          this.eventsSolo = snapshot.val();
+          firebase.database().ref('events/team/' + cat).once('value', snapshot => {
+            this.eventsTeam = snapshot.val();
+            this.loading = false;
+          }).catch(err => {
+            console.error(err);
+          })
         }).catch(err => {
           console.error(err);
         })

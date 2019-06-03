@@ -6,6 +6,8 @@
 	<meta charset="UTF-8">
 	<title>Web Terminal</title>
 	<style>
+		@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
 		html {
 			box-sizing: border-box;
 		}
@@ -17,8 +19,8 @@
 		}
 
 		body {
-			font-family: 'Roboto', 'Helvetica Neue', 'Lucida Grande', sans-serif;
-			background-color: #3e3e3e;
+			font-family: 'Montserrat', 'Helvetica Neue', 'Lucida Grande', sans-serif;
+			background-color: #111;
 		}
 
 		body,
@@ -33,7 +35,7 @@
 		}
 
 		.gradientCont {
-			background-image: linear-gradient(-270deg, #0085FF 0%, #00FBFF 100%);
+			background-image: linear-gradient(-270deg, #56e0f5 0%, #039fb6 100%);
 			width: 100%;
 			height: 300px;
 		}
@@ -60,8 +62,9 @@
 		.mainCont h3 {
 			text-align: center;
 			font-weight: 400;
-			font-size: 18px;
-			color: rgba(255, 255, 255);
+			font-size: 24px;
+			color: rgba(0, 0, 0);
+			font-weight: 900;
 			margin: 0 0 60px 0;
 			opacity: 0;
 			animation: fadeInAnimation 0.5s ease-in-out 0.25s forwards;
@@ -71,7 +74,8 @@
 			text-align: right;
 			font-weight: 400;
 			font-size: 12px;
-			color: rgba(255, 255, 255);
+			color: rgba(0, 0, 0);
+			font-weight: bold;
 			margin: 0 0 60px 0;
 			animation: fadeInAnimation 0.5s ease-in-out 0.25s forwards;
 		}
@@ -141,11 +145,6 @@
 			opacity: 0;
 			margin-bottom: 50px;
 			animation: fadeInAnimation 0.5s ease-in-out 1s forwards;
-		}
-
-		.footerCont a {
-			color: #037AFF;
-			text-decoration: none;
 		}
 
 		/*
@@ -252,7 +251,7 @@
 			}
 
 			.mainCont h3 {
-				font-size: 16px;
+				font-size: 20px;
 				margin: 0 0 40px 0;
 			}
 
@@ -268,13 +267,13 @@
 		<div class="mainCont">
 
 			<a href="./main">Skip To Main Website</a>
-			<h3>Talk to me like lovers do. Or just say hi and friend-zone me.</h3>
+			<h3>TechXposure 3.0</h3>
 
 			<div class="terminalCont">
 				<div id="terminalReslutsCont">
 				</div>
 				<form>
-					<input id="terminalTextInput" type="text" placeholder="Try typing hi or help..." autocomplete="off">
+					<input id="terminalTextInput" type="text" placeholder="Try typing help or txp..." autocomplete="off">
 				</form>
 			</div>
 			<div class="footerCont">Made With ❤ For TechXposure</div>
@@ -328,15 +327,12 @@
 			var postHelpList = function () {
 				// Array of all the help keywords
 				var helpKeyWords = [
-					"- Open + website URL to open it in the browser (ex. open mahdif.com)",
-					"- Google + keyword to search directly in Google (ex. google banana)",
-					"- YouTube + keyword to search directly in YouTube (ex. youtube thanks Obama)",
-					"- Wiki + keyword to search directly in Wikipedia (ex. wiki numbers)",
-					"- 'Time' will display the current time.",
-					"- 'Date' will display the current date.",
-					"- 'ironman' will make you happy",
-					"- 'cat videos' will make you even happier",
-					"* There are more keywords that you have to discover by yourself."
+					"- 'TechXposure' will display information about TXP 3.0",
+					"- 'SKSomaiya' will display College Introduction",
+					"- 'Events' will show event details",
+					"- 'Tech Events' will display all the Technical Events",
+					"- 'Fun Events' will display the Fun Events",
+					"- 'Cultural Events' will display information about Cultural Events"
 				].join('<br>');
 				addTextToResults(helpKeyWords);
 			}
@@ -404,43 +400,43 @@
 					case "techevent":
 					case "tech events":
 					case "tech event":
-					case "Technical Events":
-					case "Technical Event":
-					case "coding Events":
-					case "coding Event":
-					case "code Events":
-					case "code Event":
-					case "coders Events":
-					case "coders Event":
-					case "coder Events":
-					case "coder Event":
+					case "technical events":
+					case "technical event":
+					case "coding events":
+					case "coding event":
+					case "code events":
+					case "code event":
+					case "coders events":
+					case "coders event":
+					case "coder events":
+					case "coder event":
 						clearInput();
-						addTextToResults("Technical Events:- <br> • Event1 <br> • Event2");
+						addTextToResults("<a href='./main/events.html#tech'>Technical Events:-</a> <br> • Event1 <br> • Event2");
 						break;
 
 					case "culturalevents":
 					case "culturalevent":
 					case "cultural events":
 					case "cultural event":
-					case "dance Events":
-					case "dance Event":
-					case "music Events":
-					case "music Event":
-					case "instrumental Events":
-					case "instrumental Event":
-					case "instrument Events":
-					case "instrument Event":
-					case "instruments Events":
-					case "instruments Event":
+					case "dance events":
+					case "dance event":
+					case "music events":
+					case "music event":
+					case "instrumental events":
+					case "instrumental event":
+					case "instrument events":
+					case "instrument event":
+					case "instruments events":
+					case "instruments event":
 						clearInput();
-						addTextToResults("Cultural Events:- <br> • Event1 <br> • Event2");
+						addTextToResults("<a href='./main/events.html#cultural'>Cultural Events:-</a> <br> • Event1 <br> • Event2");
 						break;
 					case "funevents":
 					case "funevent":
 					case "fun events":
 					case "fun event":
 						clearInput();
-						addTextToResults("Fun Events:- <br> • Event1 <br> • Event2");
+						addTextToResults("<a href='./main/events.html#fun'>Fun Events:-</a> <br> • Event1 <br> • Event2");
 						break;
 
 					case "appwiz.cpl":
@@ -518,7 +514,7 @@
 						addTextToResults("<a href='https://sksasc.somaiya.edu/sksasc/'>S. K. Somaiya College Of Arts, Science And Commerce</a><br>This College is one of the few young institutions of Somaiya Vidyavihar campus which has, within a very short span established a prestigious name in the field of education. The college made a modest beginning in the year 1995 with 300 students offering just two educational streams. Today it proudly boasts of educating more than 5500 students every year and offering 15 diverse Under-Graduate, Post-Graduate courses.");
 						break;
 
-					case "shutdown":
+						case "shutdown":
 					case "shut down":
 					case "restart":
 					case "logoff":
@@ -529,6 +525,15 @@
 					case "sign out":
 						clearInput();
 						openLink('./main/index.html');
+						break;
+
+					case "signup":
+					case "sign up":
+					case "register":
+					case "participate":
+					case "enter":
+						clearInput();
+						openLink('./main/register.html');
 						break;
 
 					case "cat videos":
