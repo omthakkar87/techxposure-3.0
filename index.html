@@ -6,7 +6,8 @@
 	<meta charset="UTF-8">
 	<title>Web Terminal</title>
 	<style>
-		@import url('https://fonts.googleapis.com/css?family=Montserrat');
+		@import url('https://fonts.googleapis.com/css?family=Montserrat:500,700');
+		@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
 
 		html {
 			box-sizing: border-box;
@@ -19,7 +20,7 @@
 		}
 
 		body {
-			font-family: 'Montserrat', 'Helvetica Neue', 'Lucida Grande', sans-serif;
+			font-family: 'Montserrat', sans-serif;
 			background-color: #111;
 		}
 
@@ -30,62 +31,38 @@
 		p {
 			margin: 0;
 			padding: 0;
-			/*displays system font*/
-			/*font: caption;*/
 		}
 
 		.gradientCont {
 			background-image: linear-gradient(-270deg, #56e0f5 0%, #039fb6 100%);
 			width: 100%;
-			height: 300px;
+			height: 35vh;
 		}
 
 		.mainCont {
 			width: 1000px;
 			margin: 0 auto;
-			padding-top: 20px;
-		}
-
-		.mainCont h2 {
-			display: inline-block;
-			width: 100%;
-			text-align: center;
-			/*text-transform: uppercase;*/
-			font-weight: 300;
-			font-size: 48px;
-			margin: 60px 0 0 0;
-			color: white;
-			opacity: 0;
-			animation: fadeInAnimation 0.5s ease-in-out 0s forwards;
+			padding-top: 3vh;
 		}
 
 		.mainCont h3 {
 			text-align: center;
-			font-weight: 400;
-			font-size: 24px;
-			color: rgba(0, 0, 0);
-			font-weight: 900;
-			margin: 0 0 60px 0;
-			opacity: 0;
-			animation: fadeInAnimation 0.5s ease-in-out 0.25s forwards;
+			font-weight: 700;
+			font-size: 4vh;
+			margin: 3vh 0 6vh 0;
 		}
 
 		.mainCont a {
 			text-align: right;
-			font-weight: 400;
-			font-size: 12px;
-			color: rgba(0, 0, 0);
-			font-weight: bold;
-			margin: 0 0 60px 0;
-			animation: fadeInAnimation 0.5s ease-in-out 0.25s forwards;
+			font-weight: 500;
+			font-size: 2vh;
+			display: block;
 		}
 
 		.terminalCont {
 			background: black;
-			width: 100%;
-			border-radius: 4px;
+			border-radius: 10px;
 			padding: 12px 0 0 0;
-			margin-top: -20px;
 			font-family: 'Roboto Mono', monospace;
 			opacity: 0;
 			animation: slideDownAnimation 0.5s ease-in-out 0.25s forwards, fadeInAnimation 0.4s ease-in-out 0.5s forwards;
@@ -99,12 +76,9 @@
 		}
 
 		#terminalReslutsCont {
-			width: 100%;
 			height: 55vh;
-			padding: 12px;
+			padding: 16px;
 			overflow-y: auto;
-			resize: none;
-			border: none;
 			font-size: 14px;
 			line-height: 28px;
 			display: block;
@@ -116,6 +90,8 @@
 			text-decoration: none;
 			font-weight: bold;
 			font-size: 16px;
+			display: inline;
+			animation: fadeInAnimation 0.5s ease-in 0.25s 2 forwards;
 		}
 
 		#terminalReslutsCont a:hover {
@@ -126,8 +102,8 @@
 			background: black;
 			display: block;
 			border: none;
-			border-top: 1px solid rgba(255, 255, 255, 0.2);
-			border-radius: 0 0 4px 4px;
+			border-top: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 0 0 10px 10px;
 			width: 100%;
 			color: white;
 			padding: 18px;
@@ -137,14 +113,11 @@
 		}
 
 		.footerCont {
-			width: 100%;
 			text-align: center;
-			margin-top: 50px;
+			margin-top: 5vh;
 			color: #fff;
-			font-size: 12px;
-			opacity: 0;
-			margin-bottom: 50px;
-			animation: fadeInAnimation 0.5s ease-in-out 1s forwards;
+			font-size: 2.2vh;
+			margin-bottom: 5vh;
 		}
 
 		/*
@@ -235,28 +208,8 @@
 		/* Make me responsive */
 
 		@media screen and (max-width: 1000px) {
-			.gradientCont {
-				height: 220px;
-			}
-
 			.mainCont {
-				width: 100%;
-				padding: 0 12px;
-				padding-top: 20px;
-			}
-
-			.mainCont h2 {
-				font-size: 32px;
-				margin: 40px 0 0 0;
-			}
-
-			.mainCont h3 {
-				font-size: 20px;
-				margin: 0 0 40px 0;
-			}
-
-			#terminalReslutsCont {
-				height: 55vh;
+				width: 93%;
 			}
 		}
 	</style>
@@ -273,7 +226,8 @@
 				<div id="terminalReslutsCont">
 				</div>
 				<form>
-					<input id="terminalTextInput" type="text" placeholder="Try typing help or txp..." autocomplete="off">
+					<input id="terminalTextInput" type="text" placeholder="Try typing help or txp..."
+						autocomplete="off">
 				</form>
 			</div>
 			<div class="footerCont">Made With ❤ For TechXposure</div>
@@ -514,7 +468,7 @@
 						addTextToResults("<a href='https://sksasc.somaiya.edu/sksasc/'>S. K. Somaiya College Of Arts, Science And Commerce</a><br>This College is one of the few young institutions of Somaiya Vidyavihar campus which has, within a very short span established a prestigious name in the field of education. The college made a modest beginning in the year 1995 with 300 students offering just two educational streams. Today it proudly boasts of educating more than 5500 students every year and offering 15 diverse Under-Graduate, Post-Graduate courses.");
 						break;
 
-						case "shutdown":
+					case "shutdown":
 					case "shut down":
 					case "restart":
 					case "logoff":

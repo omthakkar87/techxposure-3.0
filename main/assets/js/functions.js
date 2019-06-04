@@ -1,4 +1,4 @@
-$(window).load(function () {
+$(window).on('load', function () {
   setTimeout(function () {
     $('.loader').fadeOut();
     $('.hidding').fadeIn();
@@ -10,7 +10,6 @@ $(document).ready(function () {
     scrollController = null;
   $(this).on('mousewheel DOMMouseScroll', function (e) {
     if (!($('.outer-nav').hasClass('is-vis'))) {
-      e.preventDefault();
       var delta = (e.originalEvent.wheelDelta) ? -e.originalEvent.wheelDelta : e.originalEvent.detail * 20;
       if (delta > 50 && canScroll) {
         canScroll = false;
@@ -42,22 +41,15 @@ $(document).ready(function () {
     }
   });
   $('.cta').click(function () {
-    // var curActive = $('.side-nav').find('.is-active'),
-    //   curPos = $('.side-nav').children().index(curActive),
-    //   lastItem = $('.side-nav').children().length - 1,
-    //   nextPos = lastItem;
-    // updateNavs(lastItem);
-    // updateContent(curPos, nextPos, lastItem);
     window.location.href = 'register.html';
   });
   $('.ctaevent').click(function () {
-    // var curActive = $('.side-nav').find('.is-active'),
-    //   curPos = $('.side-nav').children().index(curActive),
-    //   lastItem = $('.side-nav').children().length - 4,
-    //   nextPos = lastItem;
-    // updateNavs(lastItem);
-    // updateContent(curPos, nextPos, lastItem);
-    window.location.href = 'register.html';
+    var curActive = $('.side-nav').find('.is-active'),
+      curPos = $('.side-nav').children().index(curActive),
+      lastItem = $('.side-nav').children().length - 4,
+      nextPos = lastItem;
+    updateNavs(lastItem);
+    updateContent(curPos, nextPos, lastItem);
   });
   // swipe support for touch devices
   var targetElement = document.getElementById('viewport'),
@@ -147,6 +139,8 @@ $(document).ready(function () {
   }
   outerNav();
 });
+
+
 var firebaseConfig = {
   apiKey: "AIzaSyB3pGNF3fdjyT-X9ZXeSAotvyBv2mrkvlo",
   authDomain: "techxposure-2019.firebaseapp.com",
@@ -160,12 +154,12 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 
-$('#msgform').on('submit',(e)=>{
+$('#msgform').on('submit', (e) => {
   e.preventDefault();
-var name = document.getElementById('name').value;
-var email = document.getElementById('email').value;
-var phone = document.getElementById('phone').value;
-var message = document.getElementById('message').value;
+  var name = document.getElementById('name').value;
+  var email = document.getElementById('email').value;
+  var phone = document.getElementById('phone').value;
+  var message = document.getElementById('message').value;
 
   firebase.database().ref('messages/' + Date.now()).set({
     name: name,
@@ -189,7 +183,7 @@ var message = document.getElementById('message').value;
 
 
 var counttiles = 0;
-$('.abouttxp').click(function () {
+$('.txp').click(function () {
   counttiles += 1;
   if (counttiles == 7) {
     console.log("7 Taps");

@@ -9,6 +9,39 @@
     <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
+    <style>
+        @media print {
+
+            .v-datatable__actions,
+            .no-print,
+            .no-print * {
+                display: none !important;
+                height: 0px !important;
+                width: 0px !important;
+            }
+
+            td,
+            th {
+                height: 100% !important;
+            }
+        }
+
+        @media only print and (max-width: 599px) {
+            .hidden-xs-only {
+                display: none !important;
+            }
+        }
+        @media only print and (min-width: 600px) {
+            .hidden-sm-and-up {
+                display: none !important;
+            }
+        }
+
+    </style>
 </head>
 
 <body>
@@ -18,9 +51,8 @@
             <v-toolbar app flat>
                 <v-toolbar-title>TechXposure Admin</v-toolbar-title>
                 <v-spacer></v-spacer>
-
                 <v-text-field flat solo hide-details prepend-inner-icon="search" label="Search" v-model="search"
-                    class="hidden-sm-and-down"></v-text-field>
+                    class="hidden-xs-and-down"></v-text-field>
                 <v-spacer></v-spacer>
                 <v-toolbar-items>
                     <v-dialog v-model="dialog" max-width="500px" persistent>
@@ -32,22 +64,22 @@
                                 <v-container>
                                     <v-layout column>
                                         <v-flex>
-                                            <v-text-field  prepend-icon="mail" type="text" required label="Email"
+                                            <v-text-field prepend-icon="mail" type="text" required label="Email"
                                                 v-model="email">
 
                                             </v-text-field>
                                         </v-flex>
                                         <v-flex>
                                             <v-text-field :append-icon="show1 ? 'visibility' : 'visibility_off'"
-                                                :type="show1 ? 'text' : 'password'"  prepend-icon="lock"
+                                                :type="show1 ? 'text' : 'password'" prepend-icon="lock"
                                                 v-model="password" @click:append="show1 = !show1" required
                                                 label="Password">
 
                                             </v-text-field>
                                         </v-flex>
                                     </v-layout>
-                                    <v-btn dark color="grey darken-3" @click="login">LOGIN</v-btn>
-                                    <v-btn flat color="grey darken-3" @click="dialog = !dialog">Cancel</v-btn>
+                                    <v-btn color="white black--text" @click="login">LOGIN</v-btn>
+                                    <v-btn flat color="white" @click="dialog = !dialog">Cancel</v-btn>
                                 </v-container>
                             </v-card-text>
                         </v-card>
@@ -63,16 +95,24 @@
             </v-toolbar>
             <v-content>
                 <v-container v-if="loggedIn">
+                    <v-layout class="pb-2">
+                        <v-flex>
+                            <v-text-field solo flat hide-details prepend-inner-icon="search" label="Search"
+                                v-model="search" class="hidden-sm-and-up"></v-text-field>
+                        </v-flex>
+                    </v-layout>
                     <v-data-table :rows-per-page-items="rows" :pagination.sync="pagination" :search="search"
                         :headers="headers" :items="registrationsSolo">
                         <template v-slot:items="props">
-                            <td>{{props.item.timestamp}}</td>
-                            <td>{{props.item.name}}</td>
-                            <td>{{props.item.phone}}</td>
-                            <td>{{props.item.email}}</td>
-                            <td>{{props.item.college}}</td>
-                            <td>{{props.item.eventsSolo}}</td>
-                            <td>{{props.item.eventsTeam}}</td>
+                            <td>{{props.index + 1}}</td>
+                            <!--
+                            <td class="text-no-wrap">{{props.item.timestamp}}</td>-->
+                            <td class="text-no-wrap">{{props.item.name}}</td>
+                            <td class="text-no-wrap">{{props.item.phone}}</td>
+                            <td class="text-no-wrap">{{props.item.email}}</td>
+                            <td class="text-no-wrap">{{props.item.college}}</td>
+                            <td class="text-no-wrap">{{props.item.eventsSolo}}</td>
+                            <td class="text-no-wrap">{{props.item.eventsTeam}}</td>
                         </template>
                         <template v-slot:no-results>
                             <v-alert :value="true" color="error" icon="warning">
@@ -85,11 +125,12 @@
         </v-app>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
-    <script>
 
+    <script>
+        String.prototype.trunc = String.prototype.trunc ||
+            function (n) {
+                return (this.length > n) ? this.substr(0, n - 1) + '...' : this;
+            };
         var firebaseConfig = {
             apiKey: "AIzaSyB3pGNF3fdjyT-X9ZXeSAotvyBv2mrkvlo",
             authDomain: "techxposure-2019.firebaseapp.com",
@@ -116,11 +157,12 @@
                     sortBy: 'timestamp'
                 },
                 headers: [
-                    { text: 'TimeStamp', value: 'timestamp', visibility:'hidden-sx-only'},
-                    { text: 'Name', value: 'name' },
+                    { text: 'Sr. No.', value: 'srno', sortable: false },
+                    // { text: 'TimeStamp', value: 'timestamp' },
+                    { text: 'Name', value: 'name', width: '10px!important' },
                     { text: 'Phone', value: 'phone' },
-                    { text: 'Email', value: 'email' , visibility:'hidden-sx-only'},
-                    { text: 'College', value: 'college' , visibility:'hidden-sx-only'},
+                    { text: 'Email', value: 'email' },
+                    { text: 'College', value: 'college' },
                     { text: 'Solo', value: 'eventsSolo' },
                     { text: 'Team', value: 'eventsTeam' },
                 ],
@@ -141,7 +183,7 @@
                         // Handle Errors here.
                         var errorCode = error.code;
                         var errorMessage = error.message;
-                        console.log(errorCode, errorMessage)
+                        alert(errorCode, errorMessage)
                     });
                 }
             },
@@ -152,11 +194,11 @@
                             if (data.key == 'eventsSolo') {
                                 data.forEach((event) => {
                                     this.registrationsSolo.push({
-                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY hh:mm:ss"),
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
                                         name: entry.val().name,
                                         phone: entry.val().phone,
                                         email: entry.val().email,
-                                        college: entry.val().college,
+                                        college: entry.val().college.trunc(15),
                                         eventsSolo: event.val()
                                     })
                                 })
@@ -171,11 +213,155 @@
                             if (data.key == 'eventsTeam') {
                                 data.forEach((event) => {
                                     this.registrationsSolo.push({
-                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY hh:mm:ss"),
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
                                         name: entry.val().name,
                                         phone: entry.val().phone,
                                         email: entry.val().email,
-                                        college: entry.val().college,
+                                        college: entry.val().college.trunc(15),
+                                        eventsTeam: event.val()
+                                    })
+                                    this.registrationsSolo.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college.trunc(15),
+                                        eventsTeam: event.val()
+                                    })
+                                    this.registrationsSolo.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college.trunc(15),
+                                        eventsTeam: event.val()
+                                    })
+                                    this.registrationsSolo.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college.trunc(15),
+                                        eventsTeam: event.val()
+                                    })
+                                    this.registrationsSolo.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college.trunc(15),
+                                        eventsTeam: event.val()
+                                    })
+                                    this.registrationsSolo.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college.trunc(15),
+                                        eventsTeam: event.val()
+                                    })
+                                    this.registrationsSolo.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college.trunc(15),
+                                        eventsTeam: event.val()
+                                    })
+                                    this.registrationsSolo.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college.trunc(15),
+                                        eventsTeam: event.val()
+                                    })
+                                    this.registrationsSolo.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college.trunc(15),
+                                        eventsTeam: event.val()
+                                    })
+                                    this.registrationsSolo.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college.trunc(15),
+                                        eventsTeam: event.val()
+                                    })
+                                    this.registrationsSolo.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college.trunc(15),
+                                        eventsTeam: event.val()
+                                    })
+                                    this.registrationsSolo.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college.trunc(15),
+                                        eventsTeam: event.val()
+                                    })
+                                    this.registrationsSolo.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college.trunc(15),
+                                        eventsTeam: event.val()
+                                    })
+                                    this.registrationsSolo.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college.trunc(15),
+                                        eventsTeam: event.val()
+                                    })
+                                    this.registrationsSolo.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college.trunc(15),
+                                        eventsTeam: event.val()
+                                    })
+                                    this.registrationsSolo.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college.trunc(15),
+                                        eventsTeam: event.val()
+                                    })
+                                    this.registrationsSolo.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college.trunc(15),
+                                        eventsTeam: event.val()
+                                    })
+                                    this.registrationsSolo.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college.trunc(15),
+                                        eventsTeam: event.val()
+                                    })
+                                    this.registrationsSolo.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college.trunc(15),
                                         eventsTeam: event.val()
                                     })
                                 })
@@ -185,10 +371,10 @@
                     });
                 })
                 firebase.auth().onAuthStateChanged((user) => {
-                    if(user){
+                    if (user) {
                         this.loggedIn = true;
                     }
-                    else{
+                    else {
                         this.loggedIn = false;
                     }
                 })

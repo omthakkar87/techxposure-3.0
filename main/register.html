@@ -14,7 +14,7 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: black;
+      background-color: #111;
     }
 
     #container {
@@ -39,12 +39,11 @@
         <v-container fluid fill-height>
           <v-layout align-center justify-center>
             <v-flex xs12 sm6 md4>
-              <v-card class="pa-3 grey darken-4">
+              <v-card class="pa-3" color="#080808">
                 <v-card-text ma-4>
                   <h1 class="text-xs-center">Register Now</h1>
                 </v-card-text>
-                <v-tabs v-if="!success" fixed-tabs v-model="active" flat rippl color="grey darken-4"
-                  slider-color="#00fff4">
+                <v-tabs v-if="!success" fixed-tabs v-model="active" flat ripple color="#080808" slider-color="#00fff4">
                   <v-tab flat ripple :key="tab.name" v-for="tab in tabs">
                     {{tab.name}}
                   </v-tab>
@@ -82,13 +81,13 @@
                         </v-checkbox>
                       </v-form>
                     </v-card-text>
-                    
-                <v-card-actions v-if="!success">
-                    <v-spacer></v-spacer>
-                    <v-btn :loading="submitting" @click="submitSolo" flat color="primary">Register</v-btn>
-                    <v-spacer></v-spacer>
-                  </v-card-actions>
-                  
+
+                    <v-card-actions v-if="!success">
+                      <v-spacer></v-spacer>
+                      <v-btn :loading="submitting" @click="submitSolo" flat color="primary">Register</v-btn>
+                      <v-spacer></v-spacer>
+                    </v-card-actions>
+
                   </v-tab-item>
                   <v-tab-item>
                     <v-card-text>
@@ -124,14 +123,14 @@
                         </v-checkbox>
                       </v-form>
                     </v-card-text>
-                <v-card-actions v-if="!success">
-                  <v-spacer></v-spacer>
-                  <v-btn :loading="submitting" @click="submitTeam" flat color="primary">Register</v-btn>
-                  <v-spacer></v-spacer>
-                </v-card-actions>
-                
-              </v-tab-item>
-            </v-tabs>
+                    <v-card-actions v-if="!success">
+                      <v-spacer></v-spacer>
+                      <v-btn :loading="submitting" @click="submitTeam" flat color="primary">Register</v-btn>
+                      <v-spacer></v-spacer>
+                    </v-card-actions>
+
+                  </v-tab-item>
+                </v-tabs>
                 <v-card-text v-if="success" class="pa-4">
                   <h1 class="text-xs-center pb-3">Thank You, For Registering!!!</h1>
                   <h3 class="text-xs-center">Keep Checking Our Website For Further Information.</h3>
@@ -283,7 +282,7 @@
                 this.$refs.formTeam.reset();
                 setTimeout(() => { window.location.reload(); }, 2000);
 
-                
+
               });
             }
           }
@@ -422,9 +421,9 @@ vec3 blur(sampler2D sp, vec2 uv, vec2 scale) {
     } else {
       tex = texture2D(u_buffer, sample, 2.) * 0.98;
       tex = vec4(
-        smoothstep(0.2, threshold - fwidth(tex.x) +0.4, tex.x),
+        smoothstep(0.0, threshold - fwidth(tex.x) +0.5, tex.x),
         smoothstep(0.0, threshold - fwidth(tex.y), tex.y),
-        smoothstep(-0.05, threshold - fwidth(tex.z) -0.2, tex.z),
+        smoothstep(0.0, threshold - fwidth(tex.z) -0.2, tex.z),
         1);
       vec3 n = hash33(vec3(uv, u_time*.1));
       tex.rgb += n * .0 - .1;
