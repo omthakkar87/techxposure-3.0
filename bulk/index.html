@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
+    <style>
+        @media print {
+
+            .v-datatable__actions,
+            .no-print,
+            .no-print * {
+                display: none !important;
+                height: 0px !important;
+                width: 0px !important;
+            }
+
+            td,
+            th {
+                height: 100% !important;
+            }
+        }
+
+        @media only print and (max-width: 599px) {
+            .hidden-xs-only {
+                display: none !important;
+            }
+        }
+
+        @media only print and (min-width: 600px) {
+            .hidden-sm-and-up {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <v-app>
+            <v-app-bar class="elevation-0">
+                <v-toolbar-title>TechXposure Admin</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-toolbar-items>
+                    <v-dialog v-model="dialog" max-width="500px" persistent>
+                        <v-card>
+                            <v-card-text class="text-xs-center pt-4 pb-0 headline">
+                                Log In
+                            </v-card-text>
+                            <v-card-text>
+                                <v-container>
+                                    <v-layout column>
+                                        <v-flex>
+                                            <v-text-field prepend-icon="mail" type="text" required label="Email"
+                                                v-model="email">
+
+                                            </v-text-field>
+                                        </v-flex>
+                                        <v-flex>
+                                            <v-text-field :append-icon="show1 ? 'visibility' : 'visibility_off'"
+                                                :type="show1 ? 'text' : 'password'" prepend-icon="lock"
+                                                v-model="password" @click:append="show1 = !show1" required
+                                                label="Password">
+                                            </v-text-field>
+                                        </v-flex>
+                                    </v-layout>
+                                    <v-btn color="white black--text" @click="login">LOGIN</v-btn>
+                                    <v-btn text color="white" @click="dialog = !dialog">Cancel</v-btn>
+                                </v-container>
+                            </v-card-text>
+                        </v-card>
+                    </v-dialog>
+                    <v-btn text @click="dialog = !dialog" v-if="!loggedIn">
+                        <span>Login</span>
+                    </v-btn>
+                    <v-btn text @click="logout" v-if="loggedIn">
+                        <v-icon left>exit_to_app</v-icon>
+                        <span>LogOut</span>
+                    </v-btn>
+                </v-toolbar-items>
+            </v-app-bar>
+            <v-content>
+                <v-container v-if="loggedIn">
+                    <v-alert if="success" color="black" dark border="left">Successfully Recorded!!!</v-alert>
+                    <v-form ref="form" @submit.prevent="sendForm">
+                        <v-text-field v-model="popno" required label="POP No." outlined type="number"></v-text-field>
+                        <v-text-field v-model="phone" required label="Phone" outlined></v-text-field>
+                        <v-text-field v-model="name" required label="Name" disabled outlined></v-text-field>
+                        <v-text-field v-model="college" required label="College" disabled outlined></v-text-field>
+                        <v-autocomplete :items="filteredSolo" v-model="selectedEvent" label="Event" outlined></v-autocomplete>
+                        <v-btn color="black" dark large @click="sendForm">Submit</v-btn>
+                    </v-form>
+                    <br>
+                    <br>
+                </v-container>
+            </v-content>
+        </v-app>
+    </div>
+
+
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyB3pGNF3fdjyT-X9ZXeSAotvyBv2mrkvlo",
+            authDomain: "techxposure-2019.firebaseapp.com",
+            databaseURL: "https://techxposure-2019.firebaseio.com",
+            projectId: "techxposure-2019",
+            storageBucket: "techxposure-2019.appspot.com",
+            messagingSenderId: "1082992539334",
+            appId: "1:1082992539334:web:de9de8033b4a474c"
+        };
+        // Initialize Firebase
+        let firebaseApp = firebase.initializeApp(firebaseConfig);
+        let db = firebaseApp.database();
+        new Vue({
+            el: '#app',
+            vuetify: new Vuetify(),
+            data: {
+                popno: null,
+                password:'',
+                dialog: false,
+                show1:false,
+                email:'',
+                phone:null,
+                loggedIn:false,
+                amount: null,
+                name:'',
+                college:null,
+                events: [{text:'code error hunt'},{text:'tech debate'}],
+                selectedEvent: '',
+                registrationsSolo:[],
+                registrationsTeam:[],
+
+            },
+            methods: {
+                logout() {
+                    firebase.auth().signOut();
+                },
+                login() {
+                    firebase.auth().signInWithEmailAndPassword(this.email, this.password).then((result) => {
+
+                        console.log('logged in')
+                        this.dialog = false;
+                        // ...
+                    }).catch(function (error) {
+                        // Handle Errors here.
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        alert(errorCode, errorMessage)
+                    });
+                },
+                sendForm(){
+                    if(this.$refs.form.validate()){
+                        db.ref('/pop/' + this.popno).set({
+                            name: this.name,
+                            college: this.college,
+                            event: this.selectedEvent,
+                            amount: this.amount,
+                            popno: this.popno,
+                            timestamp: Date.now()
+                        }).then(()=>{
+                            console.log("SUCCESS");
+                            this.$refs.form.reset()
+                        })
+                    }else{
+                        console.log("ERROR")
+                    }
+                }
+            },
+            computed:{
+                filteredSolo:function(){
+                    let filtered = this.registrationsSolo;
+                    if (this.phone){
+                        filtered = this.registrationsSolo.filter(function(){
+                            r => r.phone.toLowerCase().indexOf(this.phone) > -1;
+                            r => this.name = r.name;
+                        });
+                    }
+                    return filtered
+                },
+                filteredTeam:function(){
+                    let filtered = this.registrationsTeam;
+                    if (this.phone){
+                        filtered = this.registrationsTeam.filter(
+                            r => r.phone.toLowerCase().indexOf(this.phone) > -1
+                        );
+                    }
+                    return filtered
+                }
+            },
+            mounted() {
+                firebase.auth().onAuthStateChanged((user) => {
+                    if (user) {
+                        this.loggedIn = true;
+                    }
+                    else {
+                        this.loggedIn = false;
+                    }
+                })
+                firebase.database().ref("registration/solo/").once("value",(snapshot)=>{
+                    snapshot.forEach((entry) => {
+                        entry.forEach((data) => {
+                            if (data.key == 'eventsSolo') {
+                                data.forEach((event) => {
+                                    this.registrationsSolo.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college,
+                                        eventsTeam: event.val()
+                                    })
+                                    console.log(event.val())
+                                })
+                            }
+                        })
+                        //this.registrationsSolo.push(entry.val());
+                    });
+                })
+                firebase.database().ref('registration/team/').once('value', snapshot => {
+                    snapshot.forEach((entry) => {
+                        entry.forEach((data) => {
+                            if (data.key == 'eventsTeam') {
+                                data.forEach((event) => {
+                                    this.registrationsTeam.push({
+                                        timestamp: moment(entry.key, ["x"]).format("DD/MM/YY"),
+                                        name: entry.val().name,
+                                        phone: entry.val().phone,
+                                        email: entry.val().email,
+                                        college: entry.val().college,
+                                        eventsTeam: event.val()
+                                    })
+                                    
+                                    console.log(event.val())
+                                })
+                            }
+                        })
+                        //this.registrationsSolo.push(entry.val());
+                    });
+                })
+            }
+        })
+    </script>
+</body>
+
+</html>

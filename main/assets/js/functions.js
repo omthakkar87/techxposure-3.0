@@ -177,148 +177,57 @@ $('#msgform').on('submit', (e) => {
   });
 })
 
-
-
-
-
-
-var counttiles = 0;
-$('.txp').click(function () {
-  counttiles += 1;
-  if (counttiles == 7) {
-    console.log("7 Taps");
-    window.location.replace("games/tiles.html");
+$('.abouttxp').click(function (e) {
+  if (e.detail == 5) {
+    window.location.href = "games/tiles.html";
   }
 });
 
-var counttower = 0;
-$('.oursponsors').click(function () {
-  counttower += 1;
-  if (counttower == 7) {
-    console.log("7 Taps");
-    window.location.replace("games/tower.html");
+$('.oursponsors').click(function (e) {
+  if (e.detail == 5) {
+    window.location.href = "games/tower.html";
   }
 });
 
-var count2048 = 0;
-$('.txptitle').click(function () {
-  count2048 += 1;
-  if (count2048 == 7) {
-    console.log("7 Taps");
-    window.location.replace("games/2048.html");
+$('.txptitle').click(function (e) {
+  if (e.detail == 5) {
+    window.location.href = "games/2048.html";
   }
 });
 
-var countmath = 0;
-$('.tech').click(function () {
-  countmath += 1;
-  if (countmath == 7) {
-    console.log("7 Taps");
-    window.location.replace("games/math.html");
+$('.technology').click(function (e) {
+  if (e.detail == 5) {
+    window.location.href = "games/math.html";
   }
 });
 
-if (typeof window.ontouchstart !== 'undefined') {
-  var funtime = 0;
-  $('.fun').click(function () {
-    if (funtime == 0) {
-      //set first click
-      console.log("first click");
-      funtime = new Date().getTime();
-    }
-    else {
-      //compare first click to this click and see if they occurred within double click threshold
-      if (((new Date().getTime()) - funtime) < 8000) {
-        //double click occurred
-        funtime = 0;
-        window.location.href = "events.html#fun";
+function detectDoubleclick(element, time) {
+  if (typeof window.ontouchstart !== 'undefined') {
+    $('.' + element).click(function () {
+      if (time == 0) {
+        console.log("first click");
+        time = new Date().getTime();
       }
       else {
-        //not a double click so set as a new first click
-        funtime = new Date().getTime();
+        if (((new Date().getTime()) - time) < 8000) {
+          time = 0;
+          window.location.href = "events.html#" + element;
+        }
+        else {
+          time = new Date().getTime();
+        }
       }
-    }
-    return false;
-  });
+      return false;
+    })
 
-  var techtime = 0;
-  $('.tech').click(function () {
-    if (techtime == 0) {
-      //set first click
-      console.log("first click");
-      techtime = new Date().getTime();
-    }
-    else {
-      //compare first click to this click and see if they occurred within double click threshold
-      if (((new Date().getTime()) - techtime) < 8000) {
-        //double click occurred
-        techtime = 0;
-        window.location.href = "events.html#tech";
-      }
-      else {
-        //not a double click so set as a new first click
-        techtime = new Date().getTime();
-      }
-    }
-    return false;
-  });
-
-  var culturaltime = 0;
-  $('.cultural').click(function () {
-    if (culturaltime == 0) {
-      //set first click
-      console.log("first click");
-      culturaltime = new Date().getTime();
-    }
-    else {
-      //compare first click to this click and see if they occurred within double click threshold
-      if (((new Date().getTime()) - culturaltime) < 8000) {
-        //double click occurred
-        culturaltime = 0;
-        window.location.href = "events.html#cultural";
-      }
-      else {
-        //not a double click so set as a new first click
-        culturaltime = new Date().getTime();
-      }
-    }
-    return false;
-  });
-
-  var gamingtime = 0;
-  $('.gaming').click(function () {
-    if (gamingtime == 0) {
-      //set first click
-      console.log("first click");
-      gamingtime = new Date().getTime();
-    }
-    else {
-      //compare first click to this click and see if they occurred within double click threshold
-      if (((new Date().getTime()) - gamingtime) < 1000) {
-        //double click occurred
-        gamingtime = 0;
-        window.location.href = "events.html#gaming";
-      }
-      else {
-        //not a double click so set as a new first click
-        gamingtime = new Date().getTime();
-      }
-    }
-    return false;
-  });
-
+  }
+  else {
+    $('.' + element).click(function () {
+      window.location.href = "events.html#" + element;
+    })
+  }
 }
-else {
-  $('.fun').click(function () {
-    window.location.href = "events.html#fun";
-  });
-  $('.tech').click(function () {
-    window.location.href = "events.html#tech";
-  });
-  $('.cultural').click(function () {
-    window.location.href = "events.html#cultural";
-  });
-  $('.gaming').click(function () {
-    window.location.href = "events.html#gaming";
-  });
+var cats = document.getElementById("events").children;
+for(var i=0;i<cats.length;i++){
+  detectDoubleclick(cats[i].id,0);
 }

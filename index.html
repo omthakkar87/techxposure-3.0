@@ -49,7 +49,7 @@
 			text-align: center;
 			font-weight: 700;
 			font-size: 4vh;
-			margin: 3vh 0 6vh 0;
+			margin: 2vh 0 2vh 0;
 		}
 
 		.mainCont a {
@@ -114,10 +114,10 @@
 
 		.footerCont {
 			text-align: center;
-			margin-top: 5vh;
+			margin-top: 3vh;
 			color: #fff;
 			font-size: 2.2vh;
-			margin-bottom: 5vh;
+			margin-bottom: 2vh;
 		}
 
 		/*
@@ -283,10 +283,12 @@
 				var helpKeyWords = [
 					"- 'TechXposure' will display information about TXP 3.0",
 					"- 'SKSomaiya' will display College Introduction",
+					"- 'AR' will take you to the AR Scanner",
 					"- 'Events' will show event details",
 					"- 'Tech Events' will display all the Technical Events",
-					"- 'Fun Events' will display the Fun Events",
-					"- 'Cultural Events' will display information about Cultural Events"
+					"- 'Sub Events' will display the Sub Events",
+					"- 'Cultural Events' will display information about Cultural Events",
+					"- 'LAN Events' will display information about LAN Gaming Events"
 				].join('<br>');
 				addTextToResults(helpKeyWords);
 			}
@@ -337,10 +339,14 @@
 					// funny replies [START]
 					case "txp":
 					case "techxposure":
+					case "techxposure3.0":
+					case "techxposure 3.0":
+					case "techxposure3":
+					case "techxposure 3":
 					case "txp 3.0":
 					case "t x p":
 						clearInput();
-						addTextToResults("In the world full of infinite possibilities and opportunities, there lies a whole lot of innovators, tech enthusiasts or geeks who are just waiting for a chance to do something magical to show their talent. With the aim that technology reaches every hand, the IT and CS department of S.K. Somaiya invites all colleges for participation.");
+						addTextToResults("<a href='./main'>TechXposure 2019</a> <br>In the world full of infinite possibilities and opportunities, there lies a whole lot of innovators, tech enthusiasts or geeks who are just waiting for a chance to do something magical to show their talent. With the aim that technology reaches every hand, the IT and CS department of S.K. Somaiya invites all colleges for participation.");
 						break;
 
 					case "clear":
@@ -348,6 +354,15 @@
 					case "cls":
 						clearInput();
 						clearTextOfResults();
+						break;
+					case "events":
+					case "event":
+					case "allevent":
+					case "all event":
+					case "allevents":
+					case "all events":
+						clearInput();
+						addTextToResults("• <a href='./main/events.html#technical'>Technical Events</a> <br> • <a href='./main/events.html#sub'>Sub Events</a><br>• <a href='./main/events.html#cultural'>Cultural Events</a><br>• <a href='./main/events.html#lan%20gaming'>Lan Gaming Events</a>");
 						break;
 
 					case "techevents":
@@ -364,8 +379,14 @@
 					case "coders event":
 					case "coder events":
 					case "coder event":
+					case "tech":
+					case "technical":
+					case "coding":
+					case "code":
+					case "coders":
+					case "code":
 						clearInput();
-						addTextToResults("<a href='./main/events.html#tech'>Technical Events:-</a> <br> • Event1 <br> • Event2");
+						addTextToResults("Click Here To Check Out <a href='./main/events.html#tech'>Technical Events</a>");
 						break;
 
 					case "culturalevents":
@@ -382,15 +403,68 @@
 					case "instrument event":
 					case "instruments events":
 					case "instruments event":
+					case "cultural":
+					case "dance":
+					case "music":
+					case "instrumental":
+					case "openmic":
+					case "open mic":
 						clearInput();
-						addTextToResults("<a href='./main/events.html#cultural'>Cultural Events:-</a> <br> • Event1 <br> • Event2");
+						addTextToResults("Click Here To Check Out <a href='./main/events.html#cultural'>Cultural Events</a>");
 						break;
-					case "funevents":
-					case "funevent":
-					case "fun events":
-					case "fun event":
+					case "subevents":
+					case "subevent":
+					case "sub events":
+					case "sub event":
+					case "sub":
 						clearInput();
-						addTextToResults("<a href='./main/events.html#fun'>Fun Events:-</a> <br> • Event1 <br> • Event2");
+						addTextToResults("Click Here To Check Out <a href='./main/events.html#sub'>Sub Events</a>");
+						break;
+
+					case "lanevents":
+					case "lanevent":
+					case "lan events":
+					case "lan event":
+					case "langamingevents":
+					case "langamingevent":
+					case "lan gaming events":
+					case "lan gaming event":
+					case "langaming events":
+					case "langaming event":
+					case "langaming events":
+					case "langaming event":
+					case "lan gamingevents":
+					case "lan gamingevent":
+					case "lan gamingevents":
+					case "lan gamingevent":
+					case "counterstrike":
+					case "counterstrikeglobaloffensive":
+					case "csgo":
+					case "cs":
+					case "pubg":
+					case "pubgmobile":
+					case "pubg mobile":
+					case "pub g":
+					case "pub g mobile":
+					case "pub gmobile":
+					case "playersunknownbattleground":
+					case "playerunknownbattleground":
+					case "playersunknownbattlegroundmobile":
+					case "playerunknownbattlegroundmobile":
+					case "fifa":
+					case "fifa20":
+					case "fifa 20":
+					case "ps4":
+					case "fifa20ps4":
+					case "fifa20 ps4":
+					case "fifa 20 ps4":
+					case "fifa 20ps4":
+					case "lan":
+					case "gaming":
+					case "langaming":
+					case "lan gaming":
+						clearInput();
+						addTextToResults("Click Here To Check Out <a href='./main/events.html#lan'>Lan Gaming Events</a>");
 						break;
 
 					case "appwiz.cpl":
@@ -464,6 +538,7 @@
 					case "sksac":
 					case "sksasc":
 					case "aurobindo":
+					case "sk":
 						clearInput();
 						addTextToResults("<a href='https://sksasc.somaiya.edu/sksasc/'>S. K. Somaiya College Of Arts, Science And Commerce</a><br>This College is one of the few young institutions of Somaiya Vidyavihar campus which has, within a very short span established a prestigious name in the field of education. The college made a modest beginning in the year 1995 with 300 students offering just two educational streams. Today it proudly boasts of educating more than 5500 students every year and offering 15 diverse Under-Graduate, Post-Graduate courses.");
 						break;
@@ -477,6 +552,9 @@
 					case "log out":
 					case "signout":
 					case "sign out":
+					case "sign":
+					case "shut":
+					case "exit":
 						clearInput();
 						openLink('./main/index.html');
 						break;
@@ -488,6 +566,14 @@
 					case "enter":
 						clearInput();
 						openLink('./main/register.html');
+						break;
+
+					case "ar":
+					case "a r ":
+					case "a r":
+					case " a r":
+						clearInput();
+						openLink('./ar');
 						break;
 
 					case "cat videos":
@@ -550,6 +636,25 @@
 					case "fuck":
 						clearInput();
 						addTextToResults("F***.");
+						break;
+
+					case "poop":
+					case "shit":
+					case "💩":
+						clearInput();
+						addTextToResults("💩💩💩");
+						break;
+						
+					case "💩 💩 💩 ":
+					case "💩💩💩":
+					case "💩 💩💩":
+					case "💩💩 💩 ":
+					case "💩 💩 💩":
+					case "💩💩💩 ":
+					case "💩 💩💩 ":
+					case "💩💩 💩":
+						clearInput();
+						addTextToResults("💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩💩 Bas Hua Abhi!!!");
 						break;
 
 					// funny replies [END]

@@ -15,6 +15,7 @@
 		content="Techxposure 2019 Tech Event Organised by S.K. Somaiya College Of Arts, Science And Commerce">
 	<meta name="keywords" content="TechXposure, html, sass, jquery">
 	<meta name="author" content="Om Thakkar">
+	<link href="https://fonts.googleapis.com/css?family=Dosis:300,400,700,800&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="assets/css/main.css">
 </head>
 
@@ -35,9 +36,7 @@
 				<img src="assets/img/txp.svg" width="60px" alt="TechXposure">
 				<p class="txptitle">TechXposure 3.0</p>
 			</a>
-			<p class="device-notification--message">TechXposure has so much to offer that we must request you orient
-				your
-				device to portrait or find a larger screen. You won't be disappointed.</p>
+			<p class="device-notification--message">TechXposure has so much to offer that we must request you orient your device to portrait or find a larger screen. You won't be disappointed.</p>
 		</div>
 		<div class="perspective effect-rotate-left">
 			<div class="container">
@@ -61,7 +60,7 @@
 								<li><span>Events</span></li>
 								<li><span>Sponsors</span></li>
 								<li><span>Contact</span></li>
-								<li><span>Msg Us</span></li>
+								<li><span>Message Us</span></li>
 							</ul>
 						</nav>
 						<ul class="l-main-content main-content">
@@ -69,10 +68,13 @@
 								<div class="intro">
 									<div class="intro--banner">
 										<h1>Your best<br>
-											<div class="tech" style="display: inline-block;">technology</div>
-											<br>experience
+											<div class="technology" style="display: inline-block;">technology</div>
+											<br>experience<br>
 										</h1>
-										<button class="cta">Register Now
+										<span>Date : <b class="boldfont">18th & 19th December, 2019</b></span><br>
+										<span>Theme : <b class="boldfont">Chronicals Of Technology</b></span>
+										<br><br>
+										<button class="cta">Register Now&nbsp;&nbsp;&nbsp;
 											<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
 												xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 												viewBox="0 0 150 118" style="enable-background:new 0 0 150 118;"
@@ -84,20 +86,21 @@
 											</svg>
 											<span class="btn-background"></span>
 										</button>
-										<img src="assets/img/introduction-visual.png" alt="Welcome">
+										<object class="img" data="assets/img/txp3.svg" type="image/svg+xml" width="511px"></object>
+										<!-- <img src="assets/img/txp3.svg" width="511px" alt="Welcome"> -->
 									</div>
 									<div class="intro--options">
 										<a href="#0">
 											<h3>Have Fun</h3>
-											<p>Register Now to participate in amazing technical events.</p>
+											<p>Register now to participate in amazing Technical events.</p>
 										</a>
 										<a href="#0">
 											<h3>Be Techno Geek</h3>
-											<p>Technical nahi pasand toh atleast fun event mein toh register karo.</p>
+											<p>Unveil your obsession for technology and participate in our amazing events</p>
 										</a>
 										<a href="#0">
 											<h3>Explore More</h3>
-											<p>Arey! Yaar event wale din aajana on the spot entry bhi chalu hogi.</p>
+											<p>Join us and find out your hidden talents. Explore and win amazing prices</p>
 										</a>
 									</div>
 									
@@ -106,14 +109,10 @@
 							<li class="l-section section">
 								<div class="about">
 									<div class="about--banner">
-										<h2 class="txp">About TXP</h2>
-										<p>In the world full of infinite possibilities and opportunities, there lies a
-											whole lot of
-											innovators, tech enthusiasts or geeks who are just waiting for a chance to
-											do something magical to
-											show their talent. With the aim that technology reaches every hand, the IT
-											and CS department of
-											S.K. Somaiya invites all colleges for participation.</p><br>
+										<h2 class="abouttxp">About TXP</h2>
+										<p>
+											In this world full of infinite possibilities and opportunities, there exists a lot of innovators, tech enthusiasts and geeks who are just waiting for a chance to showcase their talent. With an aim to provide a platform to these individuals, the IT and CS department have started the annual Techno-Cultural fest called 'TechXposure'
+										</p><br>
 										<a href="#" class="ctaevent">Our Events
 											<span>
 												<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
@@ -131,42 +130,28 @@
 										<img src="assets/img/grouppic.png" alt="About Us">
 									</div>
 									<div class="about--options">
-										<a href="#0">
+										<a href="./events.html#sub">
 											<h3>Fun</h3>
 										</a>
-										<a href="#0">
-											<h3>Technology</h3>
+										<a href="./events.html#tech">
+											<h3>Technical</h3>
 										</a>
-										<a href="#0">
-											<h3>Culture</h3>
+										<a href="./events.html#cultural">
+											<h3>Cultural</h3>
 										</a>
 									</div>
 								</div>
 							</li>
 							<li class="l-section section">
 								<div class="event">
-									<!--
-                  <a href="#_" class="lightbox" id="fun">
-                    <img src="assets/img/events.jpg">
-                  </a>
-                  <a href="#_" class="lightbox" id="tech">
-                    <img src="assets/img/events.jpg">
-                  </a>
-                  <a href="#_" class="lightbox" id="cultural">
-                    <img src="assets/img/events.jpg">
-                  </a>
-                  <a href="#_" class="lightbox" id="gaming">
-                    <img src="assets/img/events.jpg">
-                  </a>
-                -->
 									<h2>Our Events</h2>
 									<div class="event--lockup">
 										<div class="event-container">
-											<div class='wrapper'>
-												<div class='item fun'></div>
-												<div class='item tech'></div>
-												<div class='item cultural'></div>
-												<div class='item gaming'></div>
+											<div class='wrapper' id="events">
+												<div class='item tech' id="tech"></div>
+												<div class='item sub' id="sub"></div>
+												<div class='item cultural' id="cultural"></div>
+												<div class='item lan' id="lan"></div>
 											</div>
 										</div>
 									</div>
@@ -174,69 +159,51 @@
 							</li>
 							<li class="l-section section">
 								<div class="sponsor">
-									<a href="#_" class="lightbox" id="simg1">
-										<img src="assets/img/events.jpg">
-									</a>
-									<a href="#_" class="lightbox" id="simg2">
-										<img src="assets/img/events.jpg">
-									</a>
-									<a href="#_" class="lightbox" id="simg3">
-										<img src="assets/img/events.jpg">
-									</a>
-									<a href="#_" class="lightbox" id="simg4">
-										<img src="assets/img/events.jpg">
-									</a>
-									<a href="#_" class="lightbox" id="simg5">
-										<img src="assets/img/events.jpg">
-									</a>
-									<a href="#_" class="lightbox" id="simg6">
-										<img src="assets/img/events.jpg">
-									</a>
-									<a href="#_" class="lightbox" id="simg7">
-										<img src="assets/img/events.jpg">
-									</a>
-									<a href="#_" class="lightbox" id="simg8">
-										<img src="assets/img/events.jpg">
-									</a>
-									<a href="#_" class="lightbox" id="simg9">
-										<img src="assets/img/events.jpg">
-									</a>
-									<a href="#_" class="lightbox" id="simg10">
-										<img src="assets/img/events.jpg">
-									</a>
 									<h2 class="oursponsors">Our Sponsors</h2>
 									<div class="sponsor--lockup">
 										<div class="simg-container">
-											<a class="simg" href="#simg1">
-												<img class="ssimg" src="assets/img/sponlogo.png">
-											</a>
-											<a class="simg" href="#simg2">
-												<img class="ssimg" src="assets/img/sponlogo.png">
-											</a>
-											<a class="simg" href="#simg3">
-												<img class="ssimg" src="assets/img/sponlogo.png">
-											</a>
-											<a class="simg" href="#simg4">
-												<img class="ssimg" src="assets/img/sponlogo.png">
-											</a>
-											<a class="simg" href="#simg5">
-												<img class="ssimg" src="assets/img/sponlogo.png">
-											</a>
-											<a class="simg" href="#simg6">
-												<img class="ssimg" src="assets/img/sponlogo.png">
-											</a>
-											<a class="simg" href="#simg7">
-												<img class="ssimg" src="assets/img/sponlogo.png">
-											</a>
-											<a class="simg" href="#simg8">
-												<img class="ssimg" src="assets/img/sponlogo.png">
-											</a>
-											<a class="simg" href="#simg9">
-												<img class="ssimg" src="assets/img/sponlogo.png">
-											</a>
-											<a class="simg" href="#simg10">
-												<img class="ssimg" src="assets/img/sponlogo.png">
-											</a>
+											<div class="simg">
+												<img class="ssimg" src="assets/img/EatPlayLove.jpg">
+											</div>
+											<div class="simg">
+												<img class="ssimg" src="assets/img/CATKing.jpg">
+											</div>
+											<div class="simg">
+												<img class="ssimg" src="assets/img/NetMateSolutions.jpg">
+											</div>
+											<div class="simg">
+												<img class="ssimg" src="assets/img/AryanFashion.jpg">
+											</div>
+											<div class="simg">
+												<img class="ssimg" src="assets/img/Slice.jpg">
+											</div>
+											<div class="simg">
+												<img class="ssimg" src="assets/img/WorldOfWaffles.jpg">
+											</div>
+											<div class="simg">
+												<img class="ssimg" src="assets/img/IIDE.jpg">
+											</div>
+											<div class="simg">
+												<img class="ssimg" src="assets/img/ICIT.jpg">
+											</div>
+											<div class="simg">
+												<img class="ssimg" src="assets/img/STC.jpg">
+											</div>
+											<div class="simg">
+												<img class="ssimg" src="assets/img/LakmeSalon.jpg">
+											</div>
+											<div class="simg">
+												<img class="ssimg" src="assets/img/GIIT.jpg">
+											</div>
+											<div class="simg">
+												<img class="ssimg" src="assets/img/LiveWire.jpg">
+											</div>
+											<div class="simg">
+												<img class="ssimg" src="assets/img/BrewHouse.jpg">
+											</div>
+											<div class="simg">
+												<img class="ssimg" src="assets/img/CoolBerg.jpg">
+											</div>
 										</div>
 									</div>
 								</div>
@@ -250,13 +217,15 @@
 													Arts, Science And Commerce,
 													Vidya Nagar, Vidyavihar - 77</a>
 												<a href="mailto:Techxposuretxp@gmail.com">techxposuretxp@gmail.com</a>
-												<a href="tel:+91-98765-43210">PR Head : +91-98765-43210</a>
-												<a href="tel:+91-99632-14785">Marketing Head : +91-99632-14785</a>
+												<a href="tel:+91-98337-17165">President (Arpit) : +91-98337-17165</a>
+												<a href="tel:+91-81085-33133">President (Taniya) : +91-81085-33133</a>
+												<a href="tel:+91-98926-28518">PR Head (Pinal) : +91-98926-28518</a>
+												<a href="tel:+91-81087-67570">Marketing Head (Mayuresh) : +91-81087-67570</a>
 											</div>
 											<ul class="modal--options">
 												<li><a href="https://facebook.com/techxposure">Facebook</a></li>
 												<li><a href="https://instagram.com/techxposure_">Instagram</a></li>
-												<li><a href="https://www.snapchat.com/add/techxposure">Snapchat</a></li>
+												<li><a href="https://www.youtube.com/c/TechXposure">YouTube</a></li>
 											</ul>
 										</div>
 									</div>
@@ -313,14 +282,13 @@
 				<li>Msg Us</li>
 			</ul>
 		</div>
+	</div>
+	
 		<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-		<script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-2.2.4.min.js"><\/script>')</script>
-		<script src="assets/js/hammer.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
 		<script src="assets/js/functions.js"></script>
-		<script src="assets/js/modernizr.js"></script>
-	</div>
 </body>
 
 </html>

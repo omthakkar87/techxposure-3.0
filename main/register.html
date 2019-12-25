@@ -4,7 +4,7 @@
 <head>
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons|Montserrat"
     rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@1.x/dist/vuetify.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
   <style>
     * {
@@ -25,9 +25,8 @@
 
   <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@1.x/dist/vuetify.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/88/three.min.js"></script>
 </head>
 
@@ -61,7 +60,7 @@
                         <v-autocomplete :error-messages="eveValError" @change="eventError" v-model="selectedSoloEvents"
                           :items="eventsSolo" item-text="name" label="Events" chips clearable multiple>
                           <template v-slot:selection="data">
-                            <v-chip :selected="data.selected" close @input="remove(data.item)">
+                            <v-chip :selected="data.selected">
                               <strong>{{ data.item.name }}</strong>&nbsp;
                             </v-chip>
                           </template><template v-slot:item="data">
@@ -103,8 +102,8 @@
                         <v-autocomplete :error-messages="eveValError" @change="eventError" v-model="selectedTeamEvents"
                           :items="eventsTeam" item-text="name" label="Events" chips clearable multiple>
                           <template v-slot:selection="data">
-                            <v-chip :selected="data.selected" close @input="remove(data.item)">
-                              <strong>{{ data.item.name }}</strong>&nbsp;
+                            <v-chip :selected="data.selected">
+                              <strong>{{ data.item.name }}</strong>
                             </v-chip>
                           </template><template v-slot:item="data">
                             <template v-if="typeof data.item !== 'object'">
@@ -179,7 +178,7 @@
           teamemail: '',
           emailRules: [
             v => !!v || 'E-mail is required',
-            v => /.+@.+/.test(v) || 'E-mail must be valid'
+            v => /\S+@\S+\.\S+/.test(v) || 'E-mail must be valid'
           ],
           phone: '',
           teamphone: '',
@@ -221,10 +220,12 @@
         }
       },
       methods: {
-        remove(item) {
-          this.selectedEvents.splice(this.selectedEvents.indexOf(item), 1)
-          this.selectedEvents = [...this.selectedEvents]
-        },
+        // remove(item) {
+        //   this.selectedSoloEvents.splice(this.selectedSoloEvents.indexOf(item), 1)
+        //   this.selectedSoloEvents = [...this.selectedSoloEvents]
+        //   this.selectedTeamEvents.splice(this.selectedTeamEvents.indexOf(item), 1)
+        //   this.selectedTeamEvents = [...this.selectedTeamEvents]
+        // },
         doneloading() {
           this.submitting = false;
         },
@@ -247,49 +248,60 @@
         },
         submitSolo() {
           if (this.eventError() || this.$refs.formSolo.validate()) {
-            if (this.$refs.formSolo.validate()) {
-              this.submitting = true;
-              db.ref('registration/solo/' + Date.now()).set({
-                name: this.name,
-                email: this.email,
-                college: this.college,
-                phone: this.phone,
-                eventsSolo: this.selectedSoloEvents
-              }).then(() => {
-                this.submitting = false;
-                this.success = true;
-                this.$refs.formSolo.reset();
-                setTimeout(() => { window.location.reload(); }, 2000);
+            if (this.selectedSoloEvents.length > 0) {
+              if (this.$refs.formSolo.validate()) {
+                this.submitting = true;
+                db.ref('registration/solo/' + Date.now()).set({
+                  name: this.name,
+                  email: this.email,
+                  college: this.college,
+                  phone: this.phone,
+                  eventsSolo: this.selectedSoloEvents
+                }).then(() => {
+                  this.submitting = false;
+                  this.success = true;
+                  this.$refs.formSolo.reset();
+                  setTimeout(() => { window.location.reload(); }, 3000);
 
-                //window.location.reload();
-              });
+                  //window.location.reload();
+                });
+              }
+            } else {
+              this.eventError()
             }
           }
         },
         submitTeam() {
           if (this.eventError() || this.$refs.formTeam.validate()) {
-            if (this.$refs.formTeam.validate()) {
-              this.submitting = true;
-              db.ref('registration/team/' + Date.now()).set({
-                name: this.teamname,
-                email: this.teamemail,
-                college: this.teamcollege,
-                phone: this.teamphone,
-                eventsTeam: this.selectedTeamEvents
-              }).then(() => {
-                this.submitting = false;
-                this.success = true;
-                this.$refs.formTeam.reset();
-                setTimeout(() => { window.location.reload(); }, 2000);
-
-
-              });
+            if (this.selectedTeamEvents.length > 0) {
+              if (this.$refs.formTeam.validate()) {
+                this.submitting = true;
+                db.ref('registration/team/' + Date.now()).set({
+                  name: this.teamname,
+                  email: this.teamemail,
+                  college: this.teamcollege,
+                  phone: this.teamphone,
+                  eventsTeam: this.selectedTeamEvents
+                }).then(() => {
+                  this.submitting = false;
+                  this.success = true;
+                  this.$refs.formTeam.reset();
+                  setTimeout(() => { window.location.reload(); }, 3000);
+                });
+              }
+            } else {
+              this.eventError();
             }
           }
         }
       },
       mounted() {
         this.$vuetify.theme.primary = "#00fff4";
+        var url = new URL(window.location.href);
+        var e = url.searchParams.get("e")
+        var type = url.searchParams.get("type")
+        if(type == "solo") this.active = 0;
+        if(type == "team") this.active = 1;
         firebase.database().ref('events/solo').on('value', (snapshot) => {
           snapshot.forEach((category) => {
             var str = category.key.charAt(0).toUpperCase() + category.key.slice(1);
@@ -298,7 +310,10 @@
             }
             this.eventsSolo.push(cat)
             category.forEach((event) => {
-              this.eventsSolo.push(event.val());
+              this.eventsSolo.push({'name': event.val().name});
+              if(type == "solo" && e == event.val().name){
+                this.selectedSoloEvents.push(event.val().name)
+              }
             })
             this.eventsSolo.push({ divider: true })
           })
@@ -311,7 +326,10 @@
             }
             this.eventsTeam.push(cat)
             category.forEach((event) => {
-              this.eventsTeam.push(event.val());
+              this.eventsTeam.push({'name': event.val().name});
+              if(type == "team" && e == event.val().name){
+                this.selectedTeamEvents.push(event.val().name)
+              }
             })
             this.eventsTeam.push({ divider: true })
           })

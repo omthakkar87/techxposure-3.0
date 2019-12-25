@@ -5,7 +5,127 @@
     <meta charset="UTF-8">
     <title>Tiles</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="tiles/css/style.css">
+    <style>
+        body {
+            background-color: #000000;
+        }
+
+        .modal {
+            display: none;
+            background: rgba(0, 0, 0, 0.7);
+            position: absolute;
+            top: 50vh;
+            transform: translateY(-50vh);
+            width: 98vw;
+            height: 98vh;
+        }
+
+        .win {
+            height: 15vh;
+            color: #ffffff;
+            font-size: 8vh;
+            font-weight: bold;
+            font-family: "Roboto Mono";
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .game {
+            background-color: #000000;
+            width: 50vh;
+            height: 50vh;
+            user-select: none;
+            border: #ffffff solid 1vh;
+        }
+
+        .side {
+            background-color: #000000;
+            width: 50vh;
+            user-select: none;
+            display: block;
+        }
+
+        .block {
+            transition: background-color 0.3s, transform 0.2s;
+            float: left;
+        }
+
+        .b1:hover {
+            background-color: #444444;
+            cursor: pointer;
+        }
+
+        .b2:hover {
+            background-color: #bbbbbb;
+            cursor: pointer;
+        }
+
+        .row {
+            width: 50vh;
+            overflow: hidden;
+            overflow-x: hidden;
+            perspective: 50vh;
+        }
+
+        .b1 {
+            transform: rotateY(0deg);
+            display: inline-block;
+            height: 8vh;
+            width: 8vh;
+            background-color: #000000;
+            border-color: #000000;
+            border-width: 1vh;
+            border-style: solid;
+        }
+
+        .b2 {
+            transform: rotateY(180deg);
+            display: inline-block;
+            height: 8vh;
+            width: 8vh;
+            background-color: #ffffff;
+            border-width: 1vh;
+            border-style: solid;
+        }
+
+        .title {
+            color: #ffffff;
+            font-size: 8vh;
+            font-weight: bold;
+            font-family: "Roboto Mono";
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .button {
+            cursor: pointer;
+            width: 40vh;
+            height: 8vh;
+            background-color: #555;
+            color: #ffffff;
+            font-size: 5vh;
+            font-weight: bold;
+            font-family: "Roboto Mono";
+            display: table-cell;
+            vertical-align: middle;
+            border-radius: 2vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        #moves {
+            color: #aaaaaa;
+            font-size: 4vh;
+            font-weight: bold;
+            font-family: "Roboto Mono";
+            display: table-cell;
+            vertical-align: middle;
+        }
+    </style>
 </head>
 
 <body>
@@ -67,11 +187,53 @@
             <div class="win">You Win!</div>
             <br>
             <br>
-            <div class="button" onclick="newgame();document.getElementById('winmodal').style.display='none';">Play Again</div>
+            <div class="button" onclick="newgame();document.getElementById('winmodal').style.display='none';">Play Again
+            </div>
         </center>
     </div>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-    <script src="tiles/js/index.js"></script>
+    <script>
+        var moves;
+
+        function random(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+        function toggle(a, b) {
+            moves += 1;
+            document.getElementById("moves").innerHTML = "Moves: " + moves;
+            $(document.getElementsByClassName('block')[a + (b * 5)]).toggleClass("b1 b2");
+            if (a < 4) { $(document.getElementsByClassName('block')[(a + 1) + (b * 5)]).toggleClass("b1 b2") }
+            if (a > 0) { $(document.getElementsByClassName('block')[(a - 1) + (b * 5)]).toggleClass("b1 b2") }
+            if (b < 4) { $(document.getElementsByClassName('block')[a + ((b + 1) * 5)]).toggleClass("b1 b2") }
+            if (b > 0) { $(document.getElementsByClassName('block')[a + ((b - 1) * 5)]).toggleClass("b1 b2") }
+            if (document.getElementsByClassName('b1').length == 25 || document.getElementsByClassName('b2').length == 25) {
+                document.getElementById('winmodal').style.display = 'block';
+            }
+        }
+
+        function set(a, b) {
+            $(document.getElementsByClassName('block')[a + (b * 5)]).toggleClass("b1 b2");
+            if (a < 4) { $(document.getElementsByClassName('block')[(a + 1) + (b * 5)]).toggleClass("b1 b2") }
+            if (a > 0) { $(document.getElementsByClassName('block')[(a - 1) + (b * 5)]).toggleClass("b1 b2") }
+            if (b < 4) { $(document.getElementsByClassName('block')[a + ((b + 1) * 5)]).toggleClass("b1 b2") }
+            if (b > 0) { $(document.getElementsByClassName('block')[a + ((b - 1) * 5)]).toggleClass("b1 b2") }
+        }
+
+        function newgame() {
+            moves = 0;
+            var j = document.getElementsByClassName('b2').length
+            for (var i = 0; i < j; i++) {
+                $(document.getElementsByClassName('b2')[0]).toggleClass("b1 b2");
+            }
+            for (var i = 0; i < 14; i++) {
+                set(random(0, 4), random(0, 4))
+            }
+            document.getElementById("moves").innerHTML = "Moves: " + moves;
+        }
+
+        newgame();
+    </script>
 </body>
 
 </html>
